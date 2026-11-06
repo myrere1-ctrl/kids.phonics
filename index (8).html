@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mum's Wisdom Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#faf6f0;--panel:#fff;--ink:#2b2420;--muted:#7a6e66;--line:#ebe2d6;--accent:#c4673f;--accent-ink:#fff;--accent-2:#f6e4d9;--sage:#5f8263;--sage-2:#e3ece2;--warn:#9a6412;--warn-2:#fbf0d9;--bad:#b23b3b;--bad-2:#f8e1e1;--blue:#3d6a9c;--blue-2:#e1ebf6;--radius:14px;--shadow:0 1px 2px rgba(60,40,20,.06),0 4px 16px rgba(60,40,20,.05)}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1715;--panel:#25201d;--ink:#f1e9e1;--muted:#a99c92;--line:#3a322d;--accent:#e08a62;--accent-ink:#1b1715;--accent-2:#3d2a20;--sage:#93b496;--sage-2:#24302a;--warn:#e0b25a;--warn-2:#3a3020;--bad:#e27a7a;--bad-2:#3d2424;--blue:#8db3de;--blue-2:#1f2a38;--shadow:none}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "DM Sans",system-ui,-apple-system,Segoe UI,sans-serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.2;margin:0 0 .4em}
+h1{font-size:1.7rem}h2{font-size:1.25rem}h3{font-size:1.05rem}
+a{color:var(--accent)}
+.app{display:flex;min-height:100vh}
+.side{width:236px;flex:0 0 236px;background:var(--panel);border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{padding:4px 10px 16px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.brand b{font-family:Fraunces,serif;font-size:1.2rem;display:block}
+.brand small{color:var(--muted)}
+.nav button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;color:var(--ink);padding:9px 10px;border-radius:10px;font:inherit;cursor:pointer}
+.nav button:hover{background:var(--accent-2)}
+.nav button.on{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.nav .ico{width:20px;text-align:center}
+.side-foot{margin-top:14px;padding:10px;font-size:.8rem;color:var(--muted);border-top:1px solid var(--line)}
+main{flex:1;min-width:0;padding:26px 28px 80px;max-width:1180px}
+.topbar{display:none}
+.sub{color:var(--muted);margin:-.2em 0 1.2em}
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.stat b{font-size:1.8rem;font-family:Fraunces,serif;display:block}
+.stat span{color:var(--muted);font-size:.85rem}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.spread{justify-content:space-between}
+label{display:block;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:4px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+textarea{min-height:80px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:-1px}
+input[type=checkbox]{width:auto}
+.field{margin-bottom:12px}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:7px 12px;border-radius:10px;font:inherit;font-size:.88rem;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn.big{padding:11px 18px;font-size:1rem}
+.btn.ghost{background:none;border-color:transparent}
+.btn.danger{color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.pill{display:inline-block;font-size:.74rem;padding:2px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.Threads{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pill.X{background:var(--blue-2);color:var(--blue);border-color:transparent}
+.s-Draft{background:var(--bg)}.s-Reviewed{background:var(--warn-2);color:var(--warn)}.s-Approved{background:var(--sage-2);color:var(--sage)}.s-Scheduled{background:var(--blue-2);color:var(--blue)}.s-Published{background:var(--accent-2);color:var(--accent)}
+select.status{width:auto;padding:3px 8px;font-size:.8rem;border-radius:999px;font-weight:600}
+.post{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;box-shadow:var(--shadow);position:relative}
+.post.busy{opacity:.55;pointer-events:none}
+.post.busy::after{content:"Working…";position:absolute;top:12px;right:16px;font-weight:600;color:var(--accent)}
+.post-top{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.post-top select{margin-left:auto}
+.hook{font-weight:700;margin:0 0 6px;white-space:pre-wrap}
+.pbody{margin:0 0 6px;white-space:pre-wrap}
+.pcta{margin:0 0 8px;color:var(--accent);white-space:pre-wrap}
+.meta{display:flex;gap:6px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin-bottom:8px}
+.warnchip{background:var(--warn-2);color:var(--warn);border-radius:999px;padding:2px 8px;font-size:.75rem}
+.badchip{background:var(--bad-2);color:var(--bad);border-radius:999px;padding:2px 8px;font-size:.75rem}
+.okchip{background:var(--sage-2);color:var(--sage);border-radius:999px;padding:2px 8px;font-size:.75rem}
+.actions{display:flex;gap:6px;flex-wrap:wrap}
+details.menu{position:relative}
+details.menu summary{list-style:none}
+details.menu summary::-webkit-details-marker{display:none}
+details.menu .drop{position:absolute;z-index:20;top:110%;left:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px;box-shadow:0 8px 30px rgba(0,0,0,.15);min-width:210px}
+details.menu .drop button{display:block;width:100%;text-align:left;background:none;border:0;padding:7px 10px;border-radius:8px;font:inherit;font-size:.88rem;color:var(--ink);cursor:pointer}
+details.menu .drop button:hover{background:var(--accent-2)}
+.notice{border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:.9rem;background:var(--warn-2);color:var(--warn)}
+.notice.info{background:var(--blue-2);color:var(--blue)}
+.notice.ok{background:var(--sage-2);color:var(--sage)}
+.notice.bad{background:var(--bad-2);color:var(--bad)}
+.empty{text-align:center;color:var(--muted);padding:30px 10px;border:1.5px dashed var(--line);border-radius:var(--radius)}
+.mix-row{display:grid;grid-template-columns:190px 1fr 80px;gap:10px;align-items:center;margin:7px 0;font-size:.86rem}
+.bar{height:10px;background:var(--bg);border:1px solid var(--line);border-radius:999px;position:relative;overflow:visible}
+.bar span{display:block;height:100%;background:var(--accent);border-radius:999px}
+.bar i{position:absolute;top:-4px;width:2px;height:16px;background:var(--ink);opacity:.5}
+.mix-num{text-align:right}.mix-num small{color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:.8rem}
+td input{padding:4px 6px;min-width:60px}
+.tablewrap{overflow-x:auto}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.cal .dow{font-size:.78rem;color:var(--muted);font-weight:600;padding:0 4px}
+.day{background:var(--panel);border:1px solid var(--line);border-radius:10px;min-height:120px;padding:6px;font-size:.8rem}
+.cal.month .day{min-height:92px}
+.day.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.day.out{opacity:.45}
+.day.over{background:var(--accent-2)}
+.day .dn{font-weight:700;margin-bottom:4px;display:flex;justify-content:space-between}
+.chip{display:block;padding:4px 6px;border-radius:7px;margin-bottom:4px;cursor:grab;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:1px solid var(--line)}
+.unsched{margin-top:14px}
+.unsched .chip{display:inline-block;max-width:280px;margin:0 6px 6px 0}
+.modal-bg{position:fixed;inset:0;background:rgba(20,14,10,.45);display:flex;align-items:flex-start;justify-content:center;padding:30px 16px;z-index:50;overflow:auto}
+.modal{background:var(--panel);border-radius:16px;max-width:720px;width:100%;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;z-index:60;font-size:.9rem;max-width:90vw}
+.funnel{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.funnel div{background:var(--accent-2);border-radius:12px;padding:10px;font-size:.84rem}
+.funnel b{display:block;color:var(--accent)}
+.idea{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;padding:11px 0;border-bottom:1px solid var(--line)}
+.idea:last-child{border-bottom:0}
+.idea .num{font-family:Fraunces,Georgia,serif;color:var(--accent);font-weight:700;min-width:28px;padding-top:1px}
+.idea .main{flex:1 1 260px;min-width:0}
+.idea .main b{font-weight:600}
+.progress{display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--blue-2);color:var(--blue);margin:12px 0}
+.spin{width:16px;height:16px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:var(--panel);padding:7px 12px;font:inherit;font-size:.88rem;color:var(--ink);cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--accent);color:var(--accent-ink);font-weight:600}
+.small{font-size:.82rem;color:var(--muted)}
+.kw{display:inline-block;background:var(--sage-2);color:var(--sage);border-radius:999px;padding:1px 8px;font-size:.75rem;margin:2px 3px 0 0}
+@media (max-width:900px){
+ .side{position:fixed;left:-260px;z-index:40;transition:left .2s;height:100vh}
+ .side.open{left:0;box-shadow:0 0 40px rgba(0,0,0,.3)}
+ .topbar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+ .app{flex-direction:column}
+ main{padding:18px 16px 80px}
+ .g4{grid-template-columns:repeat(2,1fr)}.g3,.g2{grid-template-columns:1fr}
+ .mix-row{grid-template-columns:1fr 70px}.mix-row .bar{grid-column:1/-1;grid-row:2}
+ .cal{grid-template-columns:1fr}.cal .dow{display:none}.day{min-height:auto}
+ .cal.month{grid-template-columns:repeat(7,minmax(0,1fr))}.cal.month .chip{font-size:0;padding:3px;height:8px}
+ .funnel{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="topbar"><button class="btn" onclick="toggleSide()">☰</button><b style="font-family:Fraunces,serif">Mum's Wisdom Studio</b></div>
+<div class="app">
+ <aside class="side" id="side">
+  <div class="brand"><b>Mum's Wisdom</b><small>Content Studio</small></div>
+  <nav class="nav" id="nav"></nav>
+  <div class="side-foot" id="sideFoot"></div>
+ </aside>
+ <main id="main"></main>
+</div>
+<div id="modalRoot"></div>
+<script>
+/* ============ Helpers ============ */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4);
+const pad=n=>String(n).padStart(2,'0');
+const ymd=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const parseYmd=s=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const addDays=(s,n)=>{const d=parseYmd(s);d.setDate(d.getDate()+n);return ymd(d)};
+const startOfWeek=s=>{const d=parseYmd(s);d.setDate(d.getDate()-((d.getDay()+6)%7));return ymd(d)};
+const fmtDate=s=>s?parseYmd(s).toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'}):'';
+const num=v=>{const n=parseFloat(v);return isNaN(n)?0:n};
+const STATUSES=['Draft','Reviewed','Approved','Scheduled','Published'];
+const TONES=['Warm & thoughtful','Honest & reflective','Practical & clear','Playful & light','Gently encouraging'];
+const LENGTHS={short:'Short — one concise post',standard:'Standard — hook, value, ending',long:'Long — detailed story or mini-thread'};
+const OBJECTIVES=['Conversation','Experience','Save or try','Freebie','Email list','Paid product','Newsletter','No CTA'];
+const STORY_PROMPTS=["What raising three daughters taught me about patience.","A parenting decision I would approach differently today.","What independence meant in our family.","How I learned to balance guidance and letting go.","What supporting education looked like in our home.","Lessons from watching my daughters pursue education overseas.","What I learned when my children began making their own decisions.","How my perspective on success changed as I grew older.","A small everyday moment that taught me something about parenting.","What I want parents of young children to remember."];
+const IDEAS=[["I'm 49, I raised three daughters, and I'm still learning about parenting.",1],["What raising independent children means to me today.",3],["Two of my daughters became professors. Here's what I want people to understand about that journey.",3],["Why I believe small everyday learning moments deserve more attention.",0],["What does being a good parent mean to you?",1],["Five things toddlers can practise through everyday play.",4],["A free preschool activity workbook for little learners.",5],["Your toddler doesn't need every moment to become a lesson.",0],["Three easy ways to practise counting without worksheets.",0],["How to help a preschooler start naming feelings.",2],["A simple morning routine chart for little children.",4],["What can a child learn from sorting toys?",0],["The difference between helping a child and doing everything for them.",3],["Try this five-minute printable activity together.",5],["One question I wish more parents would ask their children.",1],["What I learned from watching my daughters grow into adults.",1],["Why comparing children's progress can make parenting harder.",1],["Six everyday skills preschoolers can practise at home.",4],["What should children learn before they start school?",0],["A feelings activity to try after a difficult day.",2],["Inside my preschool workbook: one page, three ways to use it.",5],["The difference between a worksheet that fills time and an activity with a purpose.",5],["How to turn a colouring page into a conversation.",4],["What independence looked like in your family may look different in mine.",3],["Four play-based activities for a rainy afternoon.",4],["How to use a daily routine printable without making the day feel rigid.",5],["What do you find hardest about teaching your preschooler at home?",0],["A free feelings worksheet for your next quiet-time activity.",5],["Why I'm creating a collection of simple learning resources for parents.",5],["A little learning, a little play, and no need to get everything perfect.",0]];
+
+/* ============ State & storage ============ */
+const KEY='mumswisdom_studio_v1';
+let storageOK=true;
+try{localStorage.setItem('__t','1');localStorage.removeItem('__t')}catch(e){storageOK=false}
+function load(){try{const s=localStorage.getItem(KEY);return s?JSON.parse(s):null}catch(e){return null}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){storageOK=false}}
+
+function defaults(){
+ const pillars=[['How Little Children Learn','Play, language, numbers, patterns, attention and curiosity.',25],['Lessons From a Single Mum','Personal stories, hard decisions, mistakes and lessons from raising three daughters.',20],['Big Feelings, Little People','Recognising emotions, listening to children, supporting communication.',15],['Raising Independent Daughters','Responsibility, decision-making, education and independence.',15],['Playful Learning at Home','Short activities, screen-free games and easy printables.',15],['Behind the Workbook','Making the products, activity demos, freebies and premium workbooks.',10]].map(([name,desc,target])=>({id:uid(),name,desc,target}));
+ const ctas=[['Conversation',"What has parenting taught you that you didn't expect?"],['Experience',"What's one small thing your child has taught you lately?"],['Save or try','Save this idea for your next playtime.'],['Freebie','Would a free printable activity pack make your week easier?'],['Email list','Get the free activity workbook and try it at home.'],['Paid product','Explore the full activity pack for more screen-free learning ideas.'],['Newsletter','Join me for practical learning ideas and thoughtful parenting reflections.']].map(([objective,text])=>({id:uid(),objective,text}));
+ const clusters=[['Preschool worksheets','Product discovery',['free preschool worksheets','preschool printable activities','toddler activity sheets','preschool learning workbook']],['Learning through play','Educational information',['play based learning activities','learning through play at home','fine motor activities for toddlers','preschool counting games']],['Feelings and emotions','Parent problem-solving',['feelings activities for preschoolers','emotion cards for kids','teaching children about feelings','preschool emotional learning activities']],['Daily routines and independence','Practical parenting',['preschool daily routine chart','teaching toddlers independence','daily routine printable for kids','life skills for preschoolers']],['Parenting reflections','Personal connection',['raising independent children','single mum parenting reflections','parenting lessons from experience','encouraging independence in children']]];
+ const topics=[];clusters.forEach(([cluster,intent,kws])=>kws.forEach(k=>topics.push({id:uid(),keyword:k,cluster,intent,status:'Idea',product:'',notes:''})));
+ const freebie={id:uid(),name:'Little Learners: Big Feelings & Happy Days',type:'Freebie',price:'Free / pay what you want',url:'',age:'2–5',topic:'Feelings & daily routines',status:'In progress',desc:'Free printable activity pack — entry point to the email list.'};
+ return {v:1,settings:{apiKey:'',model:'claude-sonnet-5-5',lang:'en',promoCap:15,
+  voice:'Warm, reflective, practical, encouraging, honest and respectful. Never preachy. Natural language for parents of toddlers and preschoolers aged 2–5.',
+  audience:'Parents and caregivers of children aged 2–5 worldwide, especially English-speaking families (US, UK, Australia, Canada) who want screen-free activities, printable learning resources and realistic parenting ideas.',
+  founder:"The founder is a 49-year-old single mother of three daughters. Two daughters have earned PhDs, are professors and work as experts in Europe. This is background only — never present it as proof that any parenting method or worksheet causes achievement.",
+  extraRules:''},
+  pillars,ctas,topics,products:[freebie],campaigns:[],stories:[],posts:[]};
+}
+let S=load()||defaults();
+(function migrate(){const d=defaults();for(const k of Object.keys(d))if(S[k]===undefined)S[k]=d[k];for(const k of Object.keys(d.settings))if(S.settings[k]===undefined)S.settings[k]=d.settings[k]})();
+
+(function seed2(){
+ if(S.seed2)return;S.seed2=true;
+ if(!S.products.some(p=>/mini-math-mastery/.test(p.url||''))){
+  S.products.unshift({id:uid(),name:"Mini Math Mastery",type:"Paid",price:"",url:"https://thelittlechic.gumroad.com/l/mini-math-mastery",age:"4+",topic:"Early maths · 10 minutes a day",status:"Live",
+   desc:"Modern printable maths workbook for short daily practice.",
+   text:"Mini Math Mastery is a modern, printable maths workbook built around a short daily routine of about 10 minutes. It is inspired by the Japanese-style daily worksheet method: small steps, a little every day, calm and consistent practice at home.",
+   facts:"My daughters did about 10 minutes of Japanese-style maths practice every day from around age 4. I designed Mini Math Mastery in a modern style based on that routine."});
+ }
+ if(!S.products.some(p=>/detective/i.test(p.name))){
+  S.products.push({id:uid(),name:"Kids Detective Series",type:"Paid",price:"",url:"",age:"",topic:"Children's detective stories and activities",status:"In progress",desc:"",text:"",facts:""});
+ }
+ if(!S.campaigns.length){const mm=S.products.find(p=>/mini-math-mastery/.test(p.url||''));
+  S.campaigns.push({id:uid(),name:"Mini Math Mastery · 10 minutes a day",goal:"Sell a product",product:mm?mm.id:"",start:"",end:"",landing:"",utm:"mini-math-mastery",text:"Angle: a calm 10-minute daily maths habit at home. Share real experience only. Never promise results."});}
+ save();
+})();
+(function seed4(){
+ if(S.seed4)return;S.seed4=true;
+ const add=[
+  {name:"Sight Word Bingo & Reading Activity Bundle",type:"Paid",price:"$9.99",url:"https://thelittlechic.gumroad.com/l/wuhimb",age:"4–8",topic:"Early reading · sight words · bingo & activities",status:"Live",desc:"5 illustrated workbooks, 150 printable pages, 125 sight words.",text:"Sight Word Bingo & Reading Activity Bundle is five illustrated printable workbooks (150 pages) that turn sight-word practice into games: bingo, word hunts, matching, sentence building and short stories. Each book covers a different set of 25 target words. Made for parents, homeschool families and teachers who want ready-to-print English reading practice.",facts:"5 workbooks: Rainbow First Words, Playground Word Quest, Chatty Word Club, Storytime Word Trail, Big Ideas Readers. 150 printable pages, 125 target words. Digital PDF, English, A4 and US Letter, with answer guides. Suggested for emerging readers ages 4–8 with adult support."},
+  {name:"Little Detectives 5-in-1 Learning Bundle",type:"Paid",price:"$9.99",url:"https://thelittlechic.gumroad.com/l/little-detectives-5-in-1-learning-bundle",age:"5–8",topic:"Printable learning activities · detective theme",status:"Live",desc:"5 themed workbooks, 250 printable activity pages, ages 5–8.",text:"Little Detectives 5-in-1 Learning Bundle is five themed printable workbooks (250 activity pages) where children work through activities one case at a time: numbers, words, shapes, nature and codes. Good for home learning, quiet afternoons or extra practice.",facts:"5 workbooks (50 pages each): Number Detectives, Word Detectives, Shape Detectives, Nature Detectives, Code Detectives. 250 activity pages, 5 answer booklets, 20 PDF files, A4 and US Letter. Digital printable PDF, English. Ages 5–8; younger children may need help reading the missions."},
+  {name:"Christmas Activity Worksheets Bundle",type:"Paid",price:"$9.99",url:"https://thelittlechic.gumroad.com/l/adyalq",age:"3–7",topic:"Seasonal · Christmas printable activities",status:"Live",desc:"5 workbooks, 150 pages, Color + B&W, ages 3–7. Seasonal (Christmas).",text:"Little Christmas Adventures is a Christmas activity worksheet bundle: five themed printable workbooks (150 activity pages) covering tracing, matching, scissor skills, early maths, picture puzzles, kindness and creativity, with two Christmas siblings as guides. For preschool, kindergarten, homeschool or a quiet holiday afternoon.",facts:"5 workbooks (30 activity pages each): Santa's Little Helpers (3–4), Gingerbread Workshop (3–5), Reindeer Counting Adventure (4–6), Christmas Picture Detectives (4–7), Christmas Kindness & Creativity (3–7). Color and ink-saving B&W editions, A4 and US Letter, one 15-page answer-and-parent guide. Digital printable PDF, English. Seasonal product (Christmas)."},
+  {name:"20 Fables for Kids Bundle",type:"Paid",price:"$9.99",url:"https://thelittlechic.gumroad.com/l/epjtaj",age:"4–8",topic:"Storybook · illustrated animal fables",status:"Live",desc:"20 illustrated animal fables, 250 pages, simple English.",text:"Little Fables is a 250-page collection of 20 illustrated animal fables retold in simple English with short sentences and colourful pictures, made for shared reading at bedtime, in a homeschool day or to start a conversation. Each fable has a clear lesson to talk about together.",facts:"20 classic animal fables retold for children, 250 pages, simple English, colourful illustrations. Digital PDF for on-screen reading or home printing. Suggested for ages 4–8 with an adult; independent reading depends on the child's English reading level."},
+  {name:"Little Detectives: Case #0 — The Missing Cookie (FREE)",type:"Freebie",price:"Free / pay what you want",url:"https://thelittlechic.gumroad.com/l/little-detectives-case-0",age:"5–8",topic:"Free printable detective mini-case · list entry point",status:"Live",desc:"Free 2-book printable detective mini-case — entry point to the Little Detectives bundle.",text:"Little Detectives: Case #0 — The Missing Cookie is a free two-book printable detective mini-case, a small taste of the Little Detectives activity style. A simple entry point for new readers and for growing the email list.",facts:"Free (pay what you want). 2 books, 8 pages, A4 and US Letter, printable PDF, English. A sample that leads into the Little Detectives 5-in-1 Learning Bundle."},
+  {name:"The Impossible Candy Factory (Series)",type:"Paid",price:"",url:"",age:"6–9",topic:"Printable mystery-adventure worksheets · solve the case",status:"Live",desc:"Printable mystery worksheet series for ages 6–9 — one case at a time.",text:"The Impossible Candy Factory is a printable mystery-adventure worksheet series for ages 6–9. Each case is a self-contained printable workbook where children solve a candy-factory mystery through maths, science and logic puzzles.",facts:"Printable mystery-adventure workbook series for ages 6–9, sold case by case on Gumroad. Cases include #02 The Chocolate River Disaster (maths mystery), #03 The Candy That Wouldn't Stop Growing (maths & science mystery) and #04 The Invisible Lollipop (light & logic mystery). Digital printable PDF in English."}
+ ];
+ add.forEach(np=>{const dup=np.url?S.products.some(p=>(p.url||'')===np.url):S.products.some(p=>p.name===np.name);if(!dup)S.products.push(Object.assign({id:uid()},np))});
+ save();
+})();
+const SEED_IDEAS=[
+[1,1,"Personal story","I'm 49, I raised three daughters, and I'm still learning about parenting.",1,1],
+[2,1,"Independence","What raising independent children means to me today.",3,0],
+[3,1,"Family & education","Two of my daughters became professors. Here's what I want people to understand about that journey.",3,1],
+[4,1,"Learning philosophy","Why I believe small everyday learning moments deserve more attention.",0,0],
+[5,1,"Conversation","What does being a good parent mean to you?",1,0],
+[6,1,"Practical learning","Five things toddlers can practise through everyday play.",4,0],
+[7,1,"Freebie","A free preschool activity workbook for little learners.",5,0],
+[8,2,"Play-based learning","Your toddler doesn't need every moment to become a lesson.",0,0],
+[9,2,"Early maths","Three easy ways to practise counting without worksheets.",0,0],
+[10,2,"Emotional learning","How to help a preschooler start naming feelings.",2,0],
+[11,2,"Daily routines","A simple morning routine chart for little children.",4,0],
+[12,2,"Early learning","What can a child learn from sorting toys?",0,0],
+[13,2,"Independence","The difference between helping a child and doing everything for them.",3,0],
+[14,2,"Workbook demo","Try this five-minute printable activity together.",5,0],
+[15,3,"Parenting reflection","One question I wish more parents would ask their children.",1,0],
+[16,3,"Personal story","What I learned from watching my daughters grow into adults.",1,1],
+[17,3,"Parenting reflection","Why comparing children's progress can make parenting harder.",1,0],
+[18,3,"Practical learning","Six everyday skills preschoolers can practise at home.",4,0],
+[19,3,"Conversation","What should children learn before they start school?",0,0],
+[20,3,"Emotional learning","A feelings activity to try after a difficult day.",2,0],
+[21,3,"Product education","Inside my preschool workbook: one page, three ways to use it.",5,0],
+[22,4,"Product education","The difference between a worksheet that fills time and an activity with a purpose.",5,0],
+[23,4,"Practical learning","How to turn a colouring page into a conversation.",4,0],
+[24,4,"Personal perspective","What independence looked like in your family may look different in mine.",3,0],
+[25,4,"Practical learning","Four play-based activities for a rainy afternoon.",4,0],
+[26,4,"Workbook demo","How to use a daily routine printable without making the day feel rigid.",5,0],
+[27,4,"Conversation","What do you find hardest about teaching your preschooler at home?",0,0],
+[28,4,"Freebie","A free feelings worksheet for your next quiet-time activity.",5,0],
+[29,4,"Founder story","Why I'm creating a collection of simple learning resources for parents.",5,1],
+[30,4,"Brand philosophy","A little learning, a little play, and no need to get everything perfect.",0,0]];
+const WEEK_TITLES={1:"Introduce the mum behind the brand",2:"Teach something useful",3:"Build trust and conversation",4:"Connect learning to products"};
+const CAT_CTA={"Freebie":"Freebie","Conversation":"Conversation","Personal story":"Experience","Parenting reflection":"Conversation","Personal perspective":"Experience","Family & education":"Conversation","Founder story":"Newsletter","Brand philosophy":"Conversation","Learning philosophy":"Conversation","Product education":"Paid product","Workbook demo":"Save or try"};
+const ctaFor=c=>CAT_CTA[c]||"Save or try";
+function ensureIdeas(){
+ if(!Array.isArray(S.ideas))S.ideas=[];
+ if(S.seed3)return;
+ S.seed3=true;
+ if(S.ideas.length)return;
+ S.ideas=SEED_IDEAS.map(([n,week,category,title,pi,personal])=>({id:uid(),n,week,category,title,pillar:S.pillars[pi]?.id||'',personal:!!personal}));
+ save();
+}
+ensureIdeas();
+let ideaMsg='',ideaFilter='all';
+let view=(location.hash||'').slice(1)||'home';
+let genForm={platform:'Threads',lang:S.settings.lang,size:'5',pillar:'mix',tone:TONES[0],length:'standard',cta:'Mixed',product:'',campaign:'',topic:'',productText:'',useStories:true,notes:''};
+let generating=false,genMsg='',genError='',lastBatch='';
+const busy={};
+let postFilter={status:'',platform:'',pillar:'',lang:'',q:''};
+let cal={mode:'week',anchor:ymd(new Date()),platform:'',pillar:''};
+let dragId=null;
+
+/* ============ Lookups ============ */
+const pillarById=id=>S.pillars.find(p=>p.id===id);
+const pillarName=id=>pillarById(id)?.name||'Unassigned';
+const productName=id=>S.products.find(p=>p.id===id)?.name||'';
+const campaignName=id=>S.campaigns.find(c=>c.id===id)?.name||'';
+const findPost=id=>S.posts.find(p=>p.id===id);
+const usableStories=()=>S.stories.filter(s=>s.confirmed&&s.privacy!=='Private');
+const fullText=p=>[p.hook,p.body,p.cta].filter(Boolean).join('\n\n');
+const normHook=s=>String(s||'').toLowerCase().replace(/[^\p{L}\p{N} ]/gu,'').split(/\s+/).filter(Boolean).slice(0,7).join(' ');
+function dupMap(){const m={};S.posts.forEach(p=>{const k=p.platform+'|'+normHook(p.hook);if(normHook(p.hook))(m[k]=m[k]||[]).push(p.id)});return m}
+let _dm=null;const isDup=p=>{_dm=_dm||dupMap();return (_dm[p.platform+'|'+normHook(p.hook)]||[]).length>1};
+function ctaRepeat(p){if(!p.cta||!p.batchId)return false;return S.posts.filter(q=>q.batchId===p.batchId&&q.platform===p.platform&&q.cta.trim().toLowerCase()===p.cta.trim().toLowerCase()).length>1}
+function xOver(p){if(p.platform!=='X')return false;const parts=fullText(p).split(/\n-{3,}\n/);return parts.some(t=>t.length>280)}
+
+/* ============ UI basics ============ */
+function toast(msg,ms=2600){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),ms)}
+function openModal(html){$('#modalRoot').innerHTML=`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal">${html}</div></div>`}
+function closeModal(){$('#modalRoot').innerHTML=''}
+function toggleSide(){$('#side').classList.toggle('open')}
+async function copyText(t){try{await navigator.clipboard.writeText(t);toast('Copied to clipboard')}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');toast('Copied to clipboard')}catch(_){toast('Copy failed — select the text manually')}a.remove()}}
+function download(name,text,type){const b=new Blob([type==='text/csv'?'\ufeff'+text:text],{type});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)}
+const csv=rows=>rows.map(r=>r.map(v=>{v=String(v??'');return /[",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}).join(',')).join('\r\n');
+const opt=(v,label,sel)=>`<option value="${esc(v)}" ${String(v)===String(sel)?'selected':''}>${esc(label??v)}</option>`;
+
+const NAV=[['home','🏠','Dashboard'],['generate','✨','Generate Posts'],['ideas','💡','Idea Bank'],['posts','📝','Content Library'],['calendar','📅','Calendar'],['stories','📖','Story Bank'],['topics','🔎','Topic & SEO Bank'],['products','📚','Workbook Products'],['campaigns','🎯','Funnel & CTAs'],['analytics','📊','Analytics'],['settings','⚙️','Brand Settings']];
+function go(v){if(v!=='ideas')ideaMsg='';view=v;try{history.replaceState(null,'','#'+v)}catch(e){}$('#side').classList.remove('open');render();window.scrollTo(0,0)}
+window.addEventListener('hashchange',()=>{const v=location.hash.slice(1);if(v&&v!==view&&VIEWS[v]){view=v;render()}});
+
+function render(){
+ _dm=null;
+ if(!VIEWS[view])view='home';
+ $('#nav').innerHTML=NAV.map(([k,i,l])=>`<button class="${k===view?'on':''}" onclick="go('${k}')"><span class="ico">${i}</span>${l}</button>`).join('');
+ const review=S.posts.filter(p=>p.status==='Draft'||p.status==='Reviewed').length;
+ $('#sideFoot').innerHTML=`${S.posts.length} posts · ${review} to review<br>${S.settings.apiKey?'<span style="color:var(--sage)">● AI connected</span>':'<span style="color:var(--warn)">● Demo mode (no API key)</span>'}`;
+ $('#main').innerHTML=(storageOK?'':`<div class="notice bad">Browser storage is not available here, so data only lasts until this tab closes. Use <b>Brand Settings → Backup</b> to save a copy. On GitHub Pages it will save normally.</div>`)+VIEWS[view]();
+}
+
+/* ============ AI ============ */
+async function callClaude(system,user,maxTokens=4000){
+ const st=S.settings;
+ if(!st.apiKey)throw new Error('No API key yet. Add your Anthropic API key in Brand Settings.');
+ let r;
+ try{
+  r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':st.apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:st.model||'claude-sonnet-5-5',max_tokens:maxTokens,system,messages:[{role:'user',content:user}]})});
+ }catch(e){throw new Error('Network request was blocked or failed. If you are testing inside a preview window, open the file in a normal browser tab or on GitHub Pages.')}
+ if(!r.ok){let m='';try{const j=await r.json();m=j.error?.message||''}catch(e){}
+  if(r.status===401)throw new Error('API key was rejected (401). Check the key in Brand Settings.');
+  if(r.status===404)throw new Error('Model not found (404). Check the model name in Brand Settings. '+m);
+  if(r.status===429)throw new Error('Rate limit reached (429). Wait a minute and try again.');
+  if(r.status===529||r.status>=500)throw new Error('The AI service is busy right now ('+r.status+'). Try again shortly.');
+  throw new Error('API error '+r.status+': '+m)}
+ const j=await r.json();
+ const text=(j.content||[]).map(c=>c.text||'').join('');
+ if(j.stop_reason==='max_tokens')console.warn('Response truncated');
+ return text;
+}
+function salvage(t){
+ const out=[];let depth=0,start=-1,inStr=false,esc=false;
+ for(let i=0;i<t.length;i++){const c=t[i];
+  if(inStr){if(esc)esc=false;else if(c==='\\')esc=true;else if(c==='"')inStr=false;continue}
+  if(c==='"'){inStr=true;continue}
+  if(c==='{'){if(depth===0)start=i;depth++}
+  else if(c==='}'){depth--;if(depth===0&&start>-1){const ch=t.slice(start,i+1);
+   try{out.push(JSON.parse(ch))}catch(e){try{out.push(JSON.parse(ch.replace(/\r?\n/g,'\\n').replace(/,\s*([}\]])/g,'$1')))}catch(e2){}}
+   start=-1}}
+ }
+ return out;
+}
+function parseJSON(t){
+ t=String(t).replace(/```(?:json)?/g,'').trim();
+ try{return JSON.parse(t)}catch(e){}
+ const a=t.indexOf('['),b=t.lastIndexOf(']'),c=t.indexOf('{'),d=t.lastIndexOf('}');
+ if(a>-1&&b>a&&(c===-1||a<c)){try{return JSON.parse(t.slice(a,b+1))}catch(e){}}
+ if(c>-1&&d>c){try{return JSON.parse(t.slice(c,d+1))}catch(e){}}
+ const sv=salvage(t);if(sv.length)return(t.trim()[0]==='{'&&sv.length===1)?sv[0]:sv;
+ throw new Error('The AI reply could not be read (it began: "'+t.slice(0,120).replace(/\s+/g,' ')+'…"). Try again.');
+}
+function systemPrompt(lang){
+ const st=S.settings;
+ const extra=(st.extraRules||'').split('\n').map(s=>s.trim()).filter(Boolean).map(s=>'- '+s).join('\n');
+ return `You are the editorial assistant for Mum's Wisdom, a parenting and preschool learning brand for a global audience.
+
+BRAND VOICE
+${st.voice}
+
+AUDIENCE
+${st.audience}
+
+FOUNDER BACKGROUND (founder-provided facts)
+${st.founder}
+
+CONTENT PILLARS
+${S.pillars.map((p,i)=>`${i+1}. ${p.name} — ${p.desc}`).join('\n')}
+
+EDITORIAL SAFEGUARDS
+- Never fabricate personal stories, family anecdotes, dialogue, hardships, testimonials, research, statistics or results.
+- Use personal experiences ONLY from the founder background above, the CONFIRMED STORIES, and the founder-confirmed product facts supplied in the request. If a post needs a personal detail that was not supplied, write a reflection or a question instead, or insert a placeholder in square brackets such as [add your real moment here].
+- Never create a causal link between a parenting decision, method or worksheet and a child's achievement. The daughters' achievements are background, not proof.
+- Never claim a worksheet or method guarantees intelligence, academic success, emotional regulation or future independence.
+- The founder is a mother sharing experience, not a clinical psychologist. Do not diagnose children or present advice as clinical treatment.
+- Keep children's personal details private: no names, schools, cities or identifying details.
+- Clearly distinguish general guidance and personal opinion from research. Do not cite studies unless a source is supplied.
+- Do not name third-party brands (for example Kumon) or imply any affiliation with them; describe methods generically (e.g. \"Japanese-style daily practice\"). Do not put URLs in the post text.
+- Avoid shaming parents or comparing children's development as a measure of worth.
+- One useful idea, reflection or activity per post. Prefer specific, original perspectives over generic motivational phrases.
+- Promote products only when relevant to the topic and campaign.${extra?'\n'+extra:''}
+
+SOCIAL SEO (keywords, not hashtags)
+- Do NOT use hashtags anywhere in hook, body or cta. Do not write the # symbol.
+- Instead, work 2–3 organic search phrases into the sentences naturally: the words a parent or teacher would really type into the search box on X or Threads for THIS post's topic (for example "screen-free activities for toddlers", "fine motor activities for preschoolers", "free printables for kids").
+- Choose the phrases from the post's own theme and category. Any example phrases here only show the style; never copy them unless they fit the topic.
+- Use each phrase once, inside a normal readable sentence. No keyword stuffing, no lists of keywords, and do not repeat the same phrase across posts in a batch.
+- Put the same phrases (lower case, without #) in seo_terms.
+- suggested_reuse must name ONE channel, either Pinterest (evergreen how-to or idea, give a keyword-style pin title) or Instagram (a photo or Reel moment, give a short caption idea), whichever fits the post better.
+
+LANGUAGE
+${lang==='id'?"Write all post text (hook, body, cta, suggested_reuse) in natural, warm, conversational Bahasa Indonesia, the way an Indonesian mum would write on social media. Do not translate literally from English. Keep the brand name \"Mum's Wisdom\" and product names unchanged. seo_terms may be Indonesian search phrases.":"Write all post text in natural, warm English for a global audience. Avoid region-specific slang."}
+
+The published post will be: hook, blank line, body, blank line, cta. Do not repeat the hook inside the body.
+
+OUTPUT
+Return ONLY valid JSON. No markdown fences, no commentary. Inside text values escape every double quote as \\" and never put raw line breaks inside a string (use \\n). Prefer curly quotes or single quotes inside post text.`;
+}
+const PLAT_RULES={Threads:'Threads: conversational; total text (hook+body+cta) up to about 480 characters; short paragraphs; no hashtags. For Long length you may write a mini-thread of 2–4 parts, each ≤480 characters, separated by a line containing only ---.',X:'X: total text (hook+body+cta) must be 280 characters or fewer for Short and Standard. For Long, write a mini-thread of 3–5 parts, each part ≤280 characters, separated by a line containing only ---. No hashtags.'};
+const LEN_RULES={short:'Short: hook plus one or two sentences.',standard:'Standard: a clear hook, one useful idea or reflection, and a natural ending.',long:'Long: a detailed reflection, story or activity walkthrough, written as a mini-thread where the platform needs it.'};
+
+function pillarSequence(n){
+ if(genForm.pillar!=='mix')return Array(n).fill(pillarName(genForm.pillar));
+ const t=S.pillars.reduce((a,p)=>a+num(p.target),0)||1;
+ const out=S.pillars.map(p=>{const v=n*num(p.target)/t;return{p,c:Math.floor(v),f:v-Math.floor(v)}});
+ let left=n-out.reduce((a,o)=>a+o.c,0);
+ [...out].sort((a,b)=>b.f-a.f).forEach(o=>{if(left>0){o.c++;left--}});
+ const seq=[];let more=true;while(more){more=false;out.forEach(o=>{if(o.c>0){seq.push(o.p.name);o.c--;more=true}})}
+ return seq;
+}
+function productFor(i){const fb=S.products.find(p=>p.type==='Freebie');if(i.category==='Freebie')return genForm.product||(fb?fb.id:'');if(i.category==='Workbook demo'||i.category==='Product education')return genForm.product||'';return ''}
+function ideasBlock(ideas){
+ const refs=[...new Set(ideas.map(i=>productFor(i)).filter(Boolean))].map(id=>S.products.find(p=>p.id===id)).filter(Boolean);
+ return `FOUNDER'S IDEAS: write exactly one post per idea below, in this order. The idea title is the topic; refine it into a strong hook but keep its meaning. Echo each idea's number as "idea_number".
+${ideas.map(i=>`${i.n}. [${i.category}] ${i.title}${i.personal?' (PERSONAL: use only confirmed stories or founder background; if a real detail is missing, write a reflection or add a [placeholder])':''} | suggested CTA objective: ${ctaFor(i.category)}${productFor(i)?' | related product: '+productName(productFor(i)):''}`).join('\n')}${refs.length?`\nPRODUCT DETAILS FOR THESE IDEAS (the only product facts you may state):\n${refs.map(p=>`- ${p.name}: ${p.text||p.desc||'no description'}${p.facts?' Founder-confirmed facts: '+p.facts:''}`).join('\n')}`:''}`;
+}
+function batchPrompt(f,pillars,avoidHooks,ideas){
+ const n=pillars.length;
+ const counts={};pillars.forEach(p=>counts[p]=(counts[p]||0)+1);
+ const prod=S.products.find(p=>p.id===f.product);
+ const camp=S.campaigns.find(c=>c.id===f.campaign);
+ const stories=f.useStories?usableStories():[];
+ const maxPromo=Math.max(f.cta==='Paid product'?n:0,Math.round(n*num(S.settings.promoCap)/100));
+ const ctaLib=S.ctas.map(c=>`- ${c.objective}: "${c.text}"`).join('\n');
+ const both=f.platform==='Both';
+ const plats=both?['Threads','X']:[f.platform];
+ let itemSchema=both?`{"content_pillar":"<exact pillar name>","cta_objective":"<one of: ${OBJECTIVES.join(', ')}>","seo_terms":["<2-3 natural search phrases used in the text, no #>"],"related_product":"<exact product name or empty string>","story_used":"<exact confirmed story title or empty string>","suggested_reuse":"<one sentence>","variants":[{"platform":"Threads","hook":"...","body":"...","cta":"..."},{"platform":"X","hook":"...","body":"...","cta":"..."}]}`:`{"platform":"${f.platform}","content_pillar":"<exact pillar name>","hook":"...","body":"...","cta":"...","cta_objective":"<one of: ${OBJECTIVES.join(', ')}>","seo_terms":["<2-3 natural search phrases used in the text, no #>"],"related_product":"<exact product name or empty string>","story_used":"<exact confirmed story title or empty string>","suggested_reuse":"<one sentence>"}`;
+ if(ideas&&ideas.length)itemSchema=itemSchema.replace('{"','{"idea_number":<number from the ideas list>,"');
+ return `Create ${n} distinct ${both?'post ideas. For EACH idea write two platform variations (Threads and X) adapted to each platform, not copied':'posts for '+f.platform}.
+
+PLATFORM RULES
+${plats.map(p=>'- '+PLAT_RULES[p]).join('\n')}
+
+LENGTH: ${LEN_RULES[f.length]}
+TONE: ${f.tone}
+
+PILLAR PLAN (exact counts)
+${Object.entries(counts).map(([k,v])=>`- ${k}: ${v}`).join('\n')}
+
+CTA OBJECTIVE: ${f.cta==='Mixed'?`Choose the best objective per post. Most posts should start conversations, share experiences or give a save/try idea. At most ${maxPromo} post(s) may use "Paid product". Freebie / Email list only where it fits naturally.`:`${f.cta}${f.cta==='No CTA'?' — end naturally without a call to action; cta may be an empty string.':''}`}
+CTA LIBRARY (for inspiration — vary the wording, do not copy every time):
+${ctaLib}
+
+PRODUCTS
+${S.products.length?S.products.map(p=>`- ${p.name} (${p.type}${p.age?', ages '+p.age:''}${p.topic?', topic: '+p.topic:''})`).join('\n'):'- none yet'}
+${prod?`Focus product for this batch: ${prod.name}. Link to it only in posts where it is genuinely relevant.`:'No focus product. Only mention a product when it clearly fits.'}
+${prod&&(prod.text||prod.facts||prod.desc)?`PRODUCT DETAILS (written by the founder; these are the ONLY product facts you may state)
+What it is: ${prod.text||prod.desc}
+Founder-confirmed facts: ${prod.facts||'none supplied'}
+Age range: ${prod.age||'not specified'}. Never invent features, page counts, prices, contents or results.`:''}
+${f.productText?`EXTRA PRODUCT TEXT FOR THIS BATCH (founder-written; may be used as product facts):
+${f.productText}`:''}
+${camp?`CAMPAIGN: ${camp.name} — goal: ${camp.goal}.${camp.text?' Message / angle: '+camp.text:''}`:''}
+${f.topic?`TOPIC / KEYWORD FOCUS: ${f.topic}`:''}
+${f.notes?`EXTRA NOTES FROM THE FOUNDER: ${f.notes}`:''}
+${ideas&&ideas.length?ideasBlock(ideas):''}
+
+CONFIRMED STORIES (the only personal anecdotes you may use)
+${stories.length?stories.map(s=>`### ${s.title}\nLife stage: ${s.stage||'-'}\nWhat happened: ${s.happened||'-'}\nWhat I learned: ${s.learned||'-'}\nParent takeaway: ${s.takeaway||'-'}${s.privacy==='Anonymise details'?'\n(Anonymise: remove names, places and identifying details.)':''}`).join('\n\n'):'None supplied. Do not write specific personal anecdotes; use reflections, questions or [placeholders].'}
+
+AVOID THESE EXISTING HOOKS (do not reuse or closely paraphrase):
+${avoidHooks.length?avoidHooks.map(h=>'- '+h).join('\n'):'- none'}
+
+Within this batch, never repeat the same hook pattern, moral or CTA.
+
+Return a JSON array of exactly ${n} objects, each shaped like:
+${itemSchema}`;
+}
+function newPost(o){return Object.assign({id:uid(),platform:'Threads',lang:'en',pillar:'',hook:'',body:'',cta:'',ctaObjective:'',seo:[],product:'',campaign:'',reuse:'',storyId:'',status:'Draft',date:'',time:'',url:'',metrics:{},batchId:'',pairId:'',createdAt:Date.now(),demo:false},o)}
+const matchPillar=n=>(S.pillars.find(p=>p.name.toLowerCase()===String(n||'').toLowerCase())||S.pillars.find(p=>String(n||'').toLowerCase().includes(p.name.toLowerCase().slice(0,12))))?.id||'';
+const matchProduct=n=>n?(S.products.find(p=>p.name.toLowerCase()===String(n).toLowerCase())?.id||''):'';
+const matchStory=n=>n?(S.stories.find(s=>s.title.toLowerCase()===String(n).toLowerCase())?.id||''):'';
+function toPosts(o,f,batchId){
+ const base={pillar:matchPillar(o.content_pillar)||(f.pillar!=='mix'?f.pillar:''),lang:f.lang,ctaObjective:o.cta_objective||(f.cta==='Mixed'?'':f.cta),seo:Array.isArray(o.seo_terms)?o.seo_terms.filter(Boolean).slice(0,6):[],product:matchProduct(o.related_product)||'',campaign:f.campaign||'',reuse:o.suggested_reuse||'',storyId:matchStory(o.story_used),batchId};
+ const vars=Array.isArray(o.variants)&&o.variants.length?o.variants:[o];
+ const pairId=vars.length>1?uid():'';
+ return vars.map(v=>newPost(Object.assign({},base,{platform:v.platform==='X'?'X':v.platform==='Threads'?'Threads':(f.platform==='X'?'X':'Threads'),hook:String(v.hook||'').trim(),body:String(v.body||'').trim(),cta:String(v.cta||'').trim(),pairId})));
+}
+async function runGenerate(){
+ if(generating){toast('A batch is already being generated — please wait.');return}
+ if(!S.settings.apiKey){toast('Add your API key in Brand Settings, or use Demo drafts.');return}
+ const f={...genForm};
+ generating=true;genError='';genMsg='Starting…';render();
+ const batchId=uid();const created=[];
+ try{
+  const total=+f.size;const seq=pillarSequence(total);
+  for(let i=0;i<total;i+=5){
+   const slice=seq.slice(i,i+5);
+   genMsg=`Writing ideas ${i+1}–${i+slice.length} of ${total}…`;render();
+   const avoid=[...S.posts.slice(0,40),...created].map(p=>p.hook).filter(Boolean).slice(-50);
+   let arr=null,lastErr=null;
+   for(let at=0;at<2&&!arr;at++){
+    try{const txt=await callClaude(systemPrompt(f.lang),batchPrompt(f,slice,avoid),Math.round(slice.length*(f.platform==='Both'?1200:800)*(f.lang==='id'?1.6:1))+1800);
+     let r=parseJSON(txt);if(!Array.isArray(r))r=r.posts||r.items||[];if(r.length)arr=r}
+    catch(e){lastErr=e;if(/API key|401|404|429|Network|busy/i.test(e.message))throw e}
+   }
+   if(!arr)throw lastErr||new Error('The AI returned no posts. Please try again.');
+   if(!arr.length)throw new Error('The AI returned no posts. Please try again.');
+   arr.slice(0,slice.length).forEach(o=>created.push(...toPosts(o,f,batchId)));
+  }
+ }catch(e){genError=e.message}
+ if(created.length){
+  S.posts.unshift(...created);
+  created.forEach(p=>{if(p.storyId){const s=S.stories.find(x=>x.id===p.storyId);if(s)s.reuse='Used'}});
+  save();lastBatch=batchId;
+  if(genError)genError=`Saved ${created.length} posts, then stopped: ${genError}`;
+  else toast(`${created.length} drafts saved`);
+ }
+ generating=false;genMsg='';render();
+}
+function demoGenerate(){
+ const n=+genForm.size;const batchId=uid();const used=new Set(S.posts.map(p=>p.hook));
+ let pool=IDEAS.filter(([h,pi])=>!used.has(h)&&(genForm.pillar==='mix'||S.pillars[pi]?.id===genForm.pillar));
+ if(!pool.length)pool=IDEAS.slice();
+ const out=[];
+ for(let i=0;i<n;i++){
+  const [hook,pi]=pool[i%pool.length];
+  const pillar=S.pillars[pi]?.id||S.pillars[0].id;
+  const obj=S.pillars[pi]?.name==='Behind the Workbook'?'Freebie':'Conversation';
+  const cta=S.ctas.find(c=>c.objective===obj)?.text||'';
+  const mk=pl=>newPost({platform:pl,lang:genForm.lang,pillar,hook,body:'[Demo draft — write the body yourself, or add your API key in Brand Settings to generate real text.]',cta,ctaObjective:obj,batchId,demo:true,product:genForm.product,campaign:genForm.campaign});
+  if(genForm.platform==='Both'){const a=mk('Threads'),b=mk('X');a.pairId=b.pairId=uid();out.push(a,b)}else out.push(mk(genForm.platform));
+ }
+ S.posts.unshift(...out);save();lastBatch=batchId;toast(`${out.length} demo drafts saved`);render();
+}
+
+const ACTIONS={
+ hook:{label:'Regenerate hook',ins:'Write a fresh, specific hook (different angle, not generic). Keep body and cta unchanged unless a tiny edit is needed for flow.'},
+ rewrite:{label:'Rewrite',ins:'Rewrite the whole post with a fresh angle while keeping the same pillar, idea and objective. Keep it within the platform rules.'},
+ shorten:{label:'Shorten',ins:'Make it noticeably shorter and tighter. If the platform is X, the total (hook+body+cta) must be 280 characters or fewer (or each thread part ≤280).'},
+ personal:{label:'Make more personal',ins:'Make it more personal and reflective in the founder\'s own voice. You may ONLY use details from the founder background and these confirmed stories. If none fit, add a short placeholder in square brackets for the founder to fill in. Never invent events, dialogue or outcomes.'},
+ adapt:{label:'Adapt to other platform',ins:'Adapt this post for the OTHER platform (Threads ⇄ X), following that platform\'s rules. Do not just copy it.'},
+ translate:{label:'Translate EN ⇄ ID',ins:'Rewrite this post in the other language (English ⇄ Bahasa Indonesia) so it reads naturally to native speakers, not as a literal translation.'}
+};
+async function aiAction(id,action){
+ const p=findPost(id);if(!p)return;
+ document.querySelectorAll('details.menu[open]').forEach(d=>d.open=false);
+ if(busy[id]){toast('Already working on this post');return}
+ if(!S.settings.apiKey){toast('Add your API key in Brand Settings to use AI actions.');return}
+ busy[id]=true;render();
+ try{
+  const targetPlat=action==='adapt'?(p.platform==='X'?'Threads':'X'):p.platform;
+  const targetLang=action==='translate'?(p.lang==='id'?'en':'id'):p.lang;
+  const stories=action==='personal'?usableStories():[];
+  const user=`Current post (${p.platform}, pillar: ${pillarName(p.pillar)}, CTA objective: ${p.ctaObjective||'none'}):
+${JSON.stringify({hook:p.hook,body:p.body,cta:p.cta})}
+
+Target platform: ${targetPlat}. ${PLAT_RULES[targetPlat]}
+
+TASK: ${ACTIONS[action].ins}
+${action==='personal'?'\nCONFIRMED STORIES:\n'+(stories.length?stories.map(s=>`### ${s.title}\n${s.happened}\nLearned: ${s.learned}`).join('\n\n'):'None — use placeholders only.'):''}
+
+Return ONLY a JSON object: {"hook":"...","body":"...","cta":"..."}`;
+  const o=parseJSON(await callClaude(systemPrompt(targetLang),user,2000));
+  if(!o||typeof o!=='object'||!('hook' in o))throw new Error('Unexpected AI reply. Try again.');
+  if(action==='adapt'||action==='translate'){
+   const np=newPost({...p,id:uid(),platform:targetPlat,lang:targetLang,hook:o.hook||'',body:o.body||'',cta:o.cta||'',status:'Draft',date:'',time:'',url:'',metrics:{},createdAt:Date.now(),demo:false,pairId:action==='adapt'?(p.pairId||(p.pairId=uid())):p.pairId});
+   S.posts.splice(S.posts.indexOf(p),0,np);toast(action==='adapt'?`New ${targetPlat} variation added`:'Translated copy added');
+  }else{
+   p.hook=o.hook??p.hook;p.body=o.body??p.body;p.cta=o.cta??p.cta;p.demo=false;
+   if(p.status!=='Draft'&&p.status!=='Published'){p.status='Draft';toast('Updated — status reset to Draft for review')}else toast('Updated');
+  }
+  save();
+ }catch(e){toast(e.message,5000)}
+ delete busy[id];render();
+}
+
+/* ============ Post ops ============ */
+function setStatus(id,s){const p=findPost(id);if(!p)return;
+ if(s==='Scheduled'&&!p.date){toast('Pick a date first (Edit, or drag it onto the calendar).');render();return}
+ p.status=s;save();render()}
+function delPost(id){if(!confirm('Delete this post?'))return;S.posts=S.posts.filter(p=>p.id!==id);save();render()}
+function postCard(p){
+ const len=fullText(p).length;
+ const warn=[];
+ if(isDup(p))warn.push('<span class="warnchip">Similar hook exists</span>');
+ if(ctaRepeat(p))warn.push('<span class="warnchip">CTA repeated in batch</span>');
+ if(xOver(p))warn.push('<span class="badchip">Over 280 chars for X</span>');
+ if(/\[[^\]]{3,}\]/.test(fullText(p)))warn.push('<span class="warnchip">Has [placeholder] to fill</span>');
+ if(p.demo)warn.push('<span class="warnchip">Demo draft</span>');
+ const story=p.storyId?S.stories.find(s=>s.id===p.storyId):null;const idea=p.ideaId?(S.ideas||[]).find(i=>i.id===p.ideaId):null;
+ return `<article class="post ${busy[p.id]?'busy':''}">
+ <div class="post-top"><span class="pill ${p.platform}">${p.platform}</span><span class="pill">${esc(pillarName(p.pillar))}</span><span class="pill">${p.lang==='id'?'Bahasa Indonesia':'English'}</span>${p.ctaObjective?`<span class="pill">${esc(p.ctaObjective)}</span>`:''}
+ <select class="status s-${p.status}" onchange="setStatus('${p.id}',this.value)" aria-label="Status">${STATUSES.map(s=>opt(s,s,p.status)).join('')}</select></div>
+ <p class="hook">${esc(p.hook)||'<i class="small">No hook</i>'}</p>
+ ${p.body?`<p class="pbody">${esc(p.body)}</p>`:''}
+ ${p.cta?`<p class="pcta">${esc(p.cta)}</p>`:''}
+ <div class="meta"><span>${len} chars</span>${p.date?`<span>📅 ${fmtDate(p.date)} ${esc(p.time)}</span>`:''}${p.product?`<span>📚 ${esc(productName(p.product))}</span>`:''}${p.campaign?`<span>🎯 ${esc(campaignName(p.campaign))}</span>`:''}${story?`<span>📖 ${esc(story.title)}</span>`:''}${idea?`<span>💡 Idea #${idea.n}</span>`:''}${warn.join('')}</div>
+ ${p.seo&&p.seo.length?`<div style="margin-bottom:6px">${p.seo.map(k=>`<span class="kw">${esc(k)}</span>`).join('')}</div>`:''}
+ ${p.reuse?`<div class="small" style="margin-bottom:8px">♻️ ${esc(p.reuse)}</div>`:''}
+ <div class="actions">
+  <button class="btn" onclick="editPost('${p.id}')">✏️ Edit</button>
+  ${p.status==='Draft'||p.status==='Reviewed'?`<button class="btn" onclick="setStatus('${p.id}','Approved')">✅ Approve</button>`:''}
+  <details class="menu"><summary class="btn">✨ AI tools ▾</summary><div class="drop">${Object.entries(ACTIONS).map(([k,a])=>`<button onclick="aiAction('${p.id}','${k}')">${k==='shorten'&&p.platform==='X'?'Shorten for X':k==='adapt'?'Adapt to '+(p.platform==='X'?'Threads':'X'):a.label}</button>`).join('')}</div></details>
+  <button class="btn" onclick="copyText(fullText(findPost('${p.id}')))">📋 Copy</button>
+  <button class="btn ghost danger" onclick="delPost('${p.id}')">Delete</button>
+ </div></article>`;
+}
+function editPost(id){
+ const p=findPost(id);if(!p)return;const m=p.metrics||{};
+ openModal(`<h2>Edit post</h2>
+ <div class="field"><label>Hook</label><textarea id="e_hook" style="min-height:60px">${esc(p.hook)}</textarea></div>
+ <div class="field"><label>Body</label><textarea id="e_body" style="min-height:140px">${esc(p.body)}</textarea></div>
+ <div class="field"><label>CTA</label><textarea id="e_cta" style="min-height:50px">${esc(p.cta)}</textarea></div>
+ <div class="grid g3">
+  <div class="field"><label>Platform</label><select id="e_platform">${opt('Threads','Threads',p.platform)}${opt('X','X',p.platform)}</select></div>
+  <div class="field"><label>Language</label><select id="e_lang">${opt('en','English',p.lang)}${opt('id','Bahasa Indonesia',p.lang)}</select></div>
+  <div class="field"><label>Status</label><select id="e_status">${STATUSES.map(s=>opt(s,s,p.status)).join('')}</select></div>
+  <div class="field"><label>Pillar</label><select id="e_pillar">${opt('','Unassigned',p.pillar)}${S.pillars.map(x=>opt(x.id,x.name,p.pillar)).join('')}</select></div>
+  <div class="field"><label>CTA objective</label><select id="e_obj">${opt('','—',p.ctaObjective)}${OBJECTIVES.map(o=>opt(o,o,p.ctaObjective)).join('')}</select></div>
+  <div class="field"><label>Product</label><select id="e_product">${opt('','None',p.product)}${S.products.map(x=>opt(x.id,x.name,p.product)).join('')}</select></div>
+  <div class="field"><label>Campaign</label><select id="e_campaign">${opt('','None',p.campaign)}${S.campaigns.map(x=>opt(x.id,x.name,p.campaign)).join('')}</select></div>
+  <div class="field"><label>Date</label><input type="date" id="e_date" value="${esc(p.date)}"></div>
+  <div class="field"><label>Time</label><input type="time" id="e_time" value="${esc(p.time)}"></div>
+ </div>
+ <div class="field"><label>SEO terms (comma separated)</label><input id="e_seo" value="${esc((p.seo||[]).join(', '))}"></div>
+ <div class="field"><label>Reuse suggestion</label><input id="e_reuse" value="${esc(p.reuse)}"></div>
+ <div class="field"><label>Published URL</label><input id="e_url" placeholder="https://" value="${esc(p.url)}"></div>
+ <h3 style="margin-top:8px">Performance (enter after publishing)</h3>
+ <div class="grid g4">${MET.map(([k,l])=>`<div class="field"><label>${l}</label><input type="number" min="0" step="any" id="m_${k}" value="${esc(m[k]??'')}"></div>`).join('')}</div>
+ <div class="row spread" style="margin-top:8px"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="savePost('${p.id}')">Save</button></div>`);
+}
+const MET=[['impressions','Impressions'],['replies','Replies'],['reposts','Reposts'],['likes','Likes'],['clicks','Link clicks'],['signups','Email sign-ups'],['sales','Sales (#)'],['revenue','Revenue ($)']];
+function savePost(id){
+ const p=findPost(id);const v=k=>$('#'+k).value;
+ p.hook=v('e_hook').trim();p.body=v('e_body').trim();p.cta=v('e_cta').trim();p.platform=v('e_platform');p.lang=v('e_lang');p.pillar=v('e_pillar');p.ctaObjective=v('e_obj');p.product=v('e_product');p.campaign=v('e_campaign');p.date=v('e_date');p.time=v('e_time');p.seo=v('e_seo').split(',').map(s=>s.trim()).filter(Boolean);p.reuse=v('e_reuse').trim();p.url=v('e_url').trim();p.demo=p.demo&&!/Demo draft/.test(p.body)?false:p.demo;
+ let st=v('e_status');
+ if(st==='Scheduled'&&!p.date){toast('Add a date to schedule this post.');return}
+ if(st==='Approved'&&p.date)st='Scheduled';
+ p.status=st;
+ p.metrics=p.metrics||{};MET.forEach(([k])=>{const x=$('#m_'+k).value;if(x==='')delete p.metrics[k];else p.metrics[k]=num(x)});
+ save();closeModal();render();toast('Saved');
+}
+
+/* ============ Views ============ */
+const VIEWS={};
+VIEWS.home=()=>{
+ const today=ymd(new Date());const wk=addDays(today,7);
+ const c=s=>S.posts.filter(p=>p.status===s).length;
+ const up=S.posts.filter(p=>p.date&&p.date>=today&&p.date<=wk).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ const dups=S.posts.filter(isDup).length;const over=S.posts.filter(xOver).length;
+ const unconf=S.stories.filter(s=>!s.confirmed).length;
+ const totalM=k=>S.posts.reduce((a,p)=>a+num(p.metrics?.[k]),0);
+ const promo=S.posts.filter(p=>p.ctaObjective==='Paid product').length;const promoPct=S.posts.length?Math.round(promo/S.posts.length*100):0;
+ const attn=[];
+ if(!S.settings.apiKey)attn.push(`<div class="notice info">You're in <b>demo mode</b>. Add your Anthropic API key in <a href="#settings" onclick="go('settings');return false">Brand Settings</a> to generate real posts.</div>`);
+ if(!usableStories().length)attn.push(`<div class="notice">No confirmed stories yet. Add a few in the <a href="#stories" onclick="go('stories');return false">Story Bank</a> so personal posts use real details.</div>`);
+ if(dups)attn.push(`<div class="notice">${dups} posts share a similar hook with another post on the same platform.</div>`);
+ if(over)attn.push(`<div class="notice bad">${over} X posts are over 280 characters.</div>`);
+ if(unconf)attn.push(`<div class="notice">${unconf} stories are waiting for your confirmation.</div>`);
+ if(promoPct>num(S.settings.promoCap))attn.push(`<div class="notice">Direct sales posts are ${promoPct}% of your content — above your ${S.settings.promoCap}% limit.</div>`);
+ return `<h1>Good to see you 👋</h1><p class="sub">Draft → Review → Approve → Schedule → Record performance. Nothing is ever published automatically.</p>
+ <div class="grid g4" style="margin-bottom:14px">
+  <div class="card stat"><b>${c('Draft')+c('Reviewed')}</b><span>Drafts to review</span></div>
+  <div class="card stat"><b>${c('Approved')}</b><span>Approved, not scheduled</span></div>
+  <div class="card stat"><b>${c('Scheduled')}</b><span>Scheduled</span></div>
+  <div class="card stat"><b>${c('Published')}</b><span>Published</span></div>
+ </div>
+ ${attn.join('')}
+ <div class="grid g2">
+  <div class="card"><div class="row spread"><h2>Next 7 days</h2><button class="btn" onclick="go('calendar')">Open calendar</button></div>
+   ${up.length?up.map(p=>`<div class="row" style="padding:7px 0;border-bottom:1px solid var(--line);cursor:pointer" onclick="editPost('${p.id}')"><span class="pill ${p.platform}">${p.platform}</span><span class="small" style="min-width:90px">${fmtDate(p.date)} ${esc(p.time)}</span><span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.hook)}</span><span class="pill s-${p.status}">${p.status}</span></div>`).join(''):'<div class="empty">Nothing scheduled this week yet.</div>'}
+  </div>
+  <div class="card"><h2>Pillar balance</h2><p class="small">Bar = your actual mix · line = target.</p>${pillarMix(S.posts)}<p class="small" style="margin-top:8px">Direct sales posts: <b>${promoPct}%</b> (limit ${esc(S.settings.promoCap)}%)</p></div>
+ </div>
+ <div class="grid g4" style="margin-top:14px">
+  <div class="card stat"><b>${totalM('impressions').toLocaleString()}</b><span>Reach · impressions</span></div>
+  <div class="card stat"><b>${(totalM('replies')+totalM('reposts')).toLocaleString()}</b><span>Engagement · replies + reposts</span></div>
+  <div class="card stat"><b>${totalM('signups').toLocaleString()}</b><span>Acquisition · email sign-ups</span></div>
+  <div class="card stat"><b>$${totalM('revenue').toLocaleString()}</b><span>Revenue · ${totalM('sales')} sales</span></div>
+ </div>
+ ${!S.posts.length?`<div class="card" style="margin-top:14px"><h2>Quick start</h2><ol><li>Add your API key in <b>Brand Settings</b> (or try demo drafts first).</li><li>Add 2–3 real stories in the <b>Story Bank</b> and tick “confirmed”.</li><li>Go to <b>Generate Posts</b>, pick a batch of 5, and generate.</li><li>Edit, approve, then drag posts onto the <b>Calendar</b>.</li></ol><button class="btn primary" onclick="go('generate')">Generate my first batch</button></div>`:''}`;
+};
+function pillarMix(posts){
+ const total=posts.length;
+ return S.pillars.map(pl=>{const n=posts.filter(p=>p.pillar===pl.id).length;const pct=total?Math.round(n/total*100):0;
+  return `<div class="mix-row"><div>${esc(pl.name)}</div><div class="bar"><span style="width:${Math.min(pct,100)}%"></span><i style="left:${Math.min(num(pl.target),100)}%"></i></div><div class="mix-num">${pct}% <small>/ ${esc(pl.target)}%</small></div></div>`}).join('');
+}
+VIEWS.generate=()=>{
+ const f=genForm;const set=k=>`onchange="genForm.${k}=this.type==='checkbox'?this.checked:this.value;render()"`;
+ const batch=lastBatch?S.posts.filter(p=>p.batchId===lastBatch):[];
+ const us=usableStories().length;const selProd=S.products.find(p=>p.id===f.product);const selCamp=S.campaigns.find(c=>c.id===f.campaign);
+ return `<h1>Generate posts</h1><p class="sub">Create a batch of drafts. Everything lands as <b>Draft</b> — you review and approve.</p>
+ <div class="card">
+ <div class="grid g3">
+  <div class="field"><label>Platform</label><div class="seg">${['Threads','X','Both'].map(x=>`<button class="${f.platform===x?'on':''}" onclick="genForm.platform='${x}';render()">${x==='Both'?'Threads + X':x}</button>`).join('')}</div></div>
+  <div class="field"><label>Content language</label><div class="seg">${[['en','English'],['id','Bahasa Indonesia']].map(([v,l])=>`<button class="${f.lang===v?'on':''}" onclick="genForm.lang='${v}';render()">${l}</button>`).join('')}</div></div>
+  <div class="field"><label>Batch size</label><div class="seg">${['5','10','20','30'].map(x=>`<button class="${f.size===x?'on':''}" onclick="genForm.size='${x}';render()">${x}</button>`).join('')}</div></div>
+  <div class="field"><label>Content pillar</label><select ${set('pillar')}>${opt('mix','Balanced mix (uses your targets)',f.pillar)}${S.pillars.map(p=>opt(p.id,p.name,f.pillar)).join('')}</select></div>
+  <div class="field"><label>Writing tone</label><select ${set('tone')}>${TONES.map(t=>opt(t,t,f.tone)).join('')}</select></div>
+  <div class="field"><label>Post length</label><select ${set('length')}>${Object.entries(LENGTHS).map(([k,v])=>opt(k,v,f.length)).join('')}</select></div>
+  <div class="field"><label>CTA objective</label><select ${set('cta')}>${opt('Mixed','Mixed (recommended)',f.cta)}${OBJECTIVES.map(o=>opt(o,o,f.cta)).join('')}</select></div>
+  <div class="field"><label>Related product</label><div class="row" style="flex-wrap:nowrap"><select ${set('product')} style="flex:1;min-width:0">${opt('','None',f.product)}${S.products.map(p=>opt(p.id,p.name,f.product)).join('')}</select><button class="btn" onclick="editProduct()">+ New</button></div></div>
+  <div class="field"><label>Campaign</label><div class="row" style="flex-wrap:nowrap"><select ${set('campaign')} style="flex:1;min-width:0">${opt('','None',f.campaign)}${S.campaigns.map(c=>opt(c.id,c.name,f.campaign)).join('')}</select><button class="btn" onclick="editCampaign()">+ New</button></div></div>
+ </div>
+ <div class="grid g2">
+  <div class="field"><label>Topic or keyword focus (optional)</label><input value="${esc(f.topic)}" placeholder="e.g. preschool counting games" onchange="genForm.topic=this.value"></div>
+  <div class="field"><label>Extra notes for this batch (optional)</label><input value="${esc(f.notes)}" placeholder="e.g. it's back-to-school week" onchange="genForm.notes=this.value"></div>
+ </div>
+ ${selProd?`<div class="notice info"><b>${esc(selProd.name)}</b>: ${selProd.text?esc(selProd.text.slice(0,170))+(selProd.text.length>170?'…':''):'no product text saved yet.'} <a href="#" onclick="editProduct('${selProd.id}');return false">Edit product text</a></div>`:''}
+ ${selCamp?`<div class="notice info"><b>${esc(selCamp.name)}</b>: ${selCamp.text?esc(selCamp.text.slice(0,170)):'no campaign message yet.'} <a href="#" onclick="editCampaign('${selCamp.id}');return false">Edit campaign</a></div>`:''}
+ <div class="field"><label>Product text for this batch (optional): write or paste what the product is, who it is for, what is inside</label><textarea style="min-height:100px" placeholder="e.g. Kids detective series: short mystery stories where children solve simple clues using observation and logic..." onchange="genForm.productText=this.value">${esc(f.productText)}</textarea></div>
+ <label style="display:flex;gap:8px;align-items:center;font-weight:500;color:var(--ink)"><input type="checkbox" ${f.useStories?'checked':''} ${set('useStories')}> Use confirmed stories from the Story Bank (${us} available — private and unconfirmed stories are never sent)</label>
+ <div class="row" style="margin-top:14px">
+  <button class="btn primary big" ${generating?'disabled':''} onclick="runGenerate()">${generating?'Generating…':`✨ Generate ${f.size} ${f.platform==='Both'?'ideas (×2 posts)':'drafts'}`}</button>
+  <button class="btn" ${generating?'disabled':''} onclick="demoGenerate()">Demo drafts (no AI)</button>
+  ${!S.settings.apiKey?'<span class="small">No API key yet — add it in Brand Settings.</span>':''}
+ </div>
+ ${generating?`<div class="progress"><div class="spin"></div>${esc(genMsg)}</div>`:''}
+ ${genError?`<div class="notice bad" style="margin-top:12px">${esc(genError)}</div>`:''}
+ </div>
+ ${batch.length?`<div class="row spread" style="margin:22px 0 10px"><h2 style="margin:0">Latest batch · ${batch.length} drafts</h2><div class="row"><button class="btn" onclick="approveBatch()">Approve all in batch</button><button class="btn" onclick="go('posts')">Open library</button></div></div>${batch.map(postCard).join('')}`:''}`;
+};
+function approveBatch(){S.posts.filter(p=>p.batchId===lastBatch&&(p.status==='Draft'||p.status==='Reviewed')).forEach(p=>p.status='Approved');save();render();toast('Batch approved')}
+
+VIEWS.ideas=()=>{
+ S.ideas=S.ideas||[];const f=genForm;
+ const used=i=>S.posts.filter(p=>p.ideaId===i.id).length;
+ const all=[...S.ideas].sort((a,b)=>a.n-b.n);
+ const nUsed=all.filter(i=>used(i)).length;
+ const list=all.filter(i=>ideaFilter==='all'||(ideaFilter==='unused'?!used(i):!!used(i)));
+ const weeks=[...new Set(list.map(i=>i.week))].sort((a,b)=>a-b);
+ const noStory=!usableStories().length;
+ const row=i=>{const u=used(i);return `<div class="idea"><div class="num">${pad(i.n)}</div><div class="main"><b>${esc(i.title)}</b>
+  <div class="meta" style="margin:4px 0 0"><span class="pill">${esc(i.category)}</span><span class="pill">${esc(pillarName(i.pillar))}</span><span class="pill">CTA: ${esc(ctaFor(i.category))}</span>${u?`<span class="okchip">${u} post${u>1?'s':''} created</span>`:'<span class="pill">Unused</span>'}${i.personal?(noStory?'<span class="warnchip">Personal · needs a confirmed story</span>':'<span class="okchip">Personal · story ready</span>'):''}</div></div>
+  <div class="actions"><button class="btn primary" onclick="genIdeas(['${i.id}'])" ${generating?'disabled':''}>${u?'Generate again':'✨ Generate post'}</button><button class="btn" onclick="addIdeaDrafts(['${i.id}'])">+ Draft</button><button class="btn ghost" onclick="editIdea('${i.id}')">Edit</button></div></div>`};
+ return `<div class="row spread"><div><h1>Idea Bank</h1><p class="sub">Your 30 starter ideas. Generate a full post from an idea, or add the idea as an empty draft to write yourself.</p></div><button class="btn primary" onclick="editIdea()">+ Add idea</button></div>
+ <div class="card" style="margin-bottom:14px"><div class="grid g3">
+  <div class="field"><label>Platform</label><div class="seg">${['Threads','X','Both'].map(x=>`<button class="${f.platform===x?'on':''}" onclick="genForm.platform='${x}';render()">${x==='Both'?'Threads + X':x}</button>`).join('')}</div></div>
+  <div class="field"><label>Content language</label><div class="seg">${[['en','English'],['id','Bahasa Indonesia']].map(([v,l])=>`<button class="${f.lang===v?'on':''}" onclick="genForm.lang='${v}';render()">${l}</button>`).join('')}</div></div>
+  <div class="field"><label>Related product (for freebie and product ideas)</label><select onchange="genForm.product=this.value;render()">${opt('','Auto (freebie ideas use your free product)',f.product)}${S.products.map(p=>opt(p.id,p.name,f.product)).join('')}</select></div></div>
+  <div class="row"><span class="small">Tone, length and campaign follow the Generate Posts page. ${nUsed} of ${all.length} ideas used.</span>
+  <div class="seg" style="margin-left:auto">${[['all','All'],['unused','Unused'],['used','Used']].map(([v,l])=>`<button class="${ideaFilter===v?'on':''}" onclick="ideaFilter='${v}';render()">${l}</button>`).join('')}</div></div>
+  ${f.lang==='id'?'<p class="small" style="margin:8px 0 0">“+ Draft” keeps the English idea title. Use “Generate post” to write in Bahasa Indonesia.</p>':''}
+ </div>
+ ${generating?`<div class="progress"><div class="spin"></div>${esc(genMsg||'Working…')}</div>`:''}
+ ${genError?`<div class="notice bad">${esc(genError)}</div>`:''}
+ ${ideaMsg?`<div class="notice ok">${esc(ideaMsg)} <a href="#posts" onclick="go('posts');return false">Open Content Library</a></div>`:''}
+ ${!S.settings.apiKey?'<div class="notice info">No API key yet. “+ Draft” works without it. Add a key in Brand Settings to generate full posts.</div>':''}
+ ${list.length?weeks.map(w=>{const items=list.filter(i=>i.week===w);const ids=JSON.stringify(items.map(i=>i.id));return `<div class="card" style="margin-bottom:14px"><div class="row spread" style="margin-bottom:4px"><h2 style="margin:0">Week ${w} · ${esc(WEEK_TITLES[w]||'Custom week')}</h2><div class="row"><button class="btn primary" ${generating?'disabled':''} onclick='genIdeas(${ids})'>✨ Generate week (${items.length})</button><button class="btn" onclick='addIdeaDrafts(${ids})'>+ Add week as drafts</button></div></div>${items.map(row).join('')}</div>`}).join(''):'<div class="empty">No ideas match this filter.</div>'}`;
+};
+function addIdeaDrafts(ids){
+ const list=ids.map(id=>S.ideas.find(i=>i.id===id)).filter(Boolean);
+ const plats=genForm.platform==='Both'?['Threads','X']:[genForm.platform];
+ const made=[];
+ list.forEach(i=>{const pairId=plats.length>1?uid():'';plats.forEach(pl=>{
+  if(S.posts.some(p=>p.ideaId===i.id&&p.platform===pl&&!p.body&&p.hook===i.title))return;
+  made.push(newPost({platform:pl,lang:genForm.lang,pillar:i.pillar,hook:i.title,ctaObjective:ctaFor(i.category),product:productFor(i),campaign:genForm.campaign,ideaId:i.id,pairId}))})});
+ if(!made.length){toast('Those ideas are already in your drafts.');return}
+ S.posts.unshift(...made);save();ideaMsg=`✓ ${made.length} empty draft${made.length>1?'s':''} added. Open them to write the body.`;render();
+}
+async function genIdeas(ids){
+ if(generating){toast('A batch is already being generated. Please wait.');return}
+ let list=ids.map(id=>S.ideas.find(i=>i.id===id)).filter(Boolean);
+ if(!list.length)return;
+ if(!S.settings.apiKey){toast('Add your API key in Brand Settings, or use “+ Draft”.');return}
+ const fresh=list.filter(i=>!S.posts.some(p=>p.ideaId===i.id));
+ if(fresh.length&&fresh.length<list.length)list=fresh;
+ else if(!fresh.length&&list.length>1&&!confirm('All ideas here already have posts. Generate them again?'))return;
+ if(list.some(i=>i.personal)&&!usableStories().length&&!confirm('Some of these ideas are personal, and you have no confirmed story yet.\n\nOK = continue (the AI only uses your founder background and adds [placeholders] for real details).\nCancel = stop, then add and confirm a story in the Story Bank.'))return;
+ const f={...genForm,size:String(list.length),pillar:'mix',cta:'Mixed',topic:'',notes:'',productText:''};
+ generating=true;genError='';ideaMsg='';genMsg='Starting…';render();
+ const batchId=uid();const created=[];
+ try{
+  for(let i=0;i<list.length;i+=5){
+   const part=list.slice(i,i+5);
+   genMsg=`Writing posts ${i+1}–${i+part.length} of ${list.length}…`;render();
+   const pil=part.map(x=>pillarName(x.pillar));
+   const avoid=[...S.posts.slice(0,40),...created].map(p=>p.hook).filter(Boolean).slice(-50);
+   let arr=null,lastErr=null;
+   for(let at=0;at<2&&!arr;at++){
+    try{const txt=await callClaude(systemPrompt(f.lang),batchPrompt(f,pil,avoid,part),Math.round(part.length*(f.platform==='Both'?1200:800)*(f.lang==='id'?1.6:1))+1800);
+     let r=parseJSON(txt);if(!Array.isArray(r))r=r.posts||r.items||[];if(r.length)arr=r}
+    catch(e){lastErr=e;if(/API key|401|404|429|Network|busy/i.test(e.message))throw e}
+   }
+   if(!arr)throw lastErr||new Error('The AI returned no posts. Please try again.');
+   arr.slice(0,part.length).forEach((o,k)=>{
+    const idea=part.find(x=>x.n===Number(o.idea_number))||part[k];if(!idea)return;
+    toPosts(o,f,batchId).forEach(p=>{p.ideaId=idea.id;if(!p.pillar)p.pillar=idea.pillar;if(!p.ctaObjective)p.ctaObjective=ctaFor(idea.category);created.push(p)});
+   });
+  }
+ }catch(e){genError=e.message}
+ if(created.length){
+  S.posts.unshift(...created);
+  created.forEach(p=>{if(p.storyId){const s=S.stories.find(x=>x.id===p.storyId);if(s)s.reuse='Used'}});
+  save();lastBatch=batchId;
+  ideaMsg=`✓ ${created.length} draft${created.length>1?'s':''} saved to the Content Library.`+(genError?` Then it stopped: ${genError}`:'');
+  genError='';
+ }
+ generating=false;genMsg='';render();
+}
+function editIdea(id){
+ const i=id?S.ideas.find(x=>x.id===id):{title:'',week:1,category:'Practical learning',pillar:S.pillars[0]?.id||'',personal:false};
+ const cats=[...new Set(S.ideas.map(x=>x.category))];
+ openModal(`<h2>${id?'Edit':'New'} idea</h2>
+ <div class="field"><label>Idea / working title</label><textarea id="i_title" style="min-height:70px">${esc(i.title)}</textarea></div>
+ <div class="grid g3"><div class="field"><label>Week</label><input type="number" min="1" id="i_week" value="${esc(i.week)}"></div>
+ <div class="field"><label>Category</label><input id="i_cat" list="catList" value="${esc(i.category)}"><datalist id="catList">${cats.map(c=>`<option value="${esc(c)}">`).join('')}</datalist></div>
+ <div class="field"><label>Content pillar</label><select id="i_pillar">${opt('','Unassigned',i.pillar)}${S.pillars.map(p=>opt(p.id,p.name,i.pillar)).join('')}</select></div></div>
+ <label style="display:flex;gap:8px;align-items:flex-start;font-weight:500;color:var(--ink)"><input type="checkbox" id="i_personal" ${i.personal?'checked':''} style="margin-top:4px"> This idea uses my personal experience (the AI only uses confirmed stories and my founder background)</label>
+ <div class="row spread" style="margin-top:12px"><div>${id?`<button class="btn ghost danger" onclick="delIdea('${id}')">Delete</button>`:''}</div><div class="row"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveIdea('${id||''}')">Save</button></div></div>`);
+}
+function saveIdea(id){
+ const d={title:$('#i_title').value.trim(),week:Math.max(1,parseInt($('#i_week').value)||1),category:$('#i_cat').value.trim()||'Practical learning',pillar:$('#i_pillar').value,personal:$('#i_personal').checked};
+ if(!d.title)return toast('Write the idea first');
+ if(id)Object.assign(S.ideas.find(x=>x.id===id),d);else S.ideas.push({id:uid(),n:Math.max(0,...S.ideas.map(x=>x.n))+1,...d});
+ save();closeModal();render();
+}
+function delIdea(id){if(!confirm('Delete this idea? Posts already created keep their text.'))return;S.ideas=S.ideas.filter(i=>i.id!==id);save();closeModal();render()}
+VIEWS.posts=()=>{
+ const f=postFilter;
+ const list=S.posts.filter(p=>(!f.status||p.status===f.status)&&(!f.platform||p.platform===f.platform)&&(!f.pillar||p.pillar===f.pillar)&&(!f.lang||p.lang===f.lang)&&(!f.q||fullText(p).toLowerCase().includes(f.q.toLowerCase())));
+ const set=k=>`onchange="postFilter.${k}=this.value;render()"`;
+ return `<div class="row spread"><div><h1>Content library</h1><p class="sub">${S.posts.length} posts · edit, approve, and adapt.</p></div><div class="row"><button class="btn" onclick="exportPosts()">⬇ Export posts CSV</button><button class="btn primary" onclick="addManualPost()">+ Write a post</button></div></div>
+ <div class="card" style="margin-bottom:14px"><div class="grid g4" style="grid-template-columns:repeat(5,1fr)">
+  <select ${set('status')}>${opt('','All statuses',f.status)}${STATUSES.map(s=>opt(s,s,f.status)).join('')}</select>
+  <select ${set('platform')}>${opt('','All platforms',f.platform)}${opt('Threads','Threads',f.platform)}${opt('X','X',f.platform)}</select>
+  <select ${set('pillar')}>${opt('','All pillars',f.pillar)}${S.pillars.map(p=>opt(p.id,p.name,f.pillar)).join('')}</select>
+  <select ${set('lang')}>${opt('','All languages',f.lang)}${opt('en','English',f.lang)}${opt('id','Bahasa Indonesia',f.lang)}</select>
+  <input placeholder="Search…" value="${esc(f.q)}" onchange="postFilter.q=this.value;render()">
+ </div></div>
+ ${list.length?list.map(postCard).join(''):`<div class="empty">${S.posts.length?'No posts match these filters.':'No posts yet. Generate your first batch.'}<br><br><button class="btn primary" onclick="go('generate')">Generate posts</button></div>`}`;
+};
+function addManualPost(){const p=newPost({lang:S.settings.lang,pillar:S.pillars[0]?.id||''});S.posts.unshift(p);save();render();editPost(p.id)}
+
+VIEWS.calendar=()=>{
+ const today=ymd(new Date());
+ const match=p=>(!cal.platform||p.platform===cal.platform)&&(!cal.pillar||p.pillar===cal.pillar);
+ let days=[],title='';
+ if(cal.mode==='week'){const s=startOfWeek(cal.anchor);for(let i=0;i<7;i++)days.push(addDays(s,i));title=`${fmtDate(days[0])} – ${fmtDate(days[6])}`}
+ else{const a=parseYmd(cal.anchor);const first=ymd(new Date(a.getFullYear(),a.getMonth(),1));const s=startOfWeek(first);for(let i=0;i<42;i++)days.push(addDays(s,i));title=a.toLocaleDateString(undefined,{month:'long',year:'numeric'})}
+ const curMonth=parseYmd(cal.anchor).getMonth();
+ const chip=p=>`<span class="chip s-${p.status}" draggable="true" ondragstart="dragId='${p.id}'" onclick="editPost('${p.id}')" title="${esc(p.hook)}">${p.time?esc(p.time)+' ':''}<b>${p.platform==='X'?'𝕏':'@'}</b> ${esc(p.hook)}</span>`;
+ const uns=S.posts.filter(p=>!p.date&&p.status!=='Published'&&match(p));
+ return `<div class="row spread"><div><h1>Content calendar</h1><p class="sub">Drag posts onto a day. Approved posts become <b>Scheduled</b>. You still post them yourself.</p></div><button class="btn" onclick="exportCalendar()">⬇ Export calendar CSV</button></div>
+ <div class="card" style="margin-bottom:12px"><div class="row spread">
+  <div class="row"><button class="btn" onclick="calMove(-1)">‹</button><button class="btn" onclick="cal.anchor=ymd(new Date());render()">Today</button><button class="btn" onclick="calMove(1)">›</button><b style="margin-left:6px">${title}</b></div>
+  <div class="row"><select style="width:auto" onchange="cal.platform=this.value;render()">${opt('','All platforms',cal.platform)}${opt('Threads','Threads',cal.platform)}${opt('X','X',cal.platform)}</select>
+  <select style="width:auto" onchange="cal.pillar=this.value;render()">${opt('','All pillars',cal.pillar)}${S.pillars.map(p=>opt(p.id,p.name,cal.pillar)).join('')}</select>
+  <div class="seg"><button class="${cal.mode==='week'?'on':''}" onclick="cal.mode='week';render()">Week</button><button class="${cal.mode==='month'?'on':''}" onclick="cal.mode='month';render()">Month</button></div></div>
+ </div></div>
+ <div class="cal ${cal.mode}">${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(d=>`<div class="dow">${d}</div>`).join('')}
+ ${days.map(d=>{const ps=S.posts.filter(p=>p.date===d&&match(p)).sort((a,b)=>(a.time||'').localeCompare(b.time||''));const dt=parseYmd(d);
+  return `<div class="day ${d===today?'today':''} ${cal.mode==='month'&&dt.getMonth()!==curMonth?'out':''}" ondragover="event.preventDefault();this.classList.add('over')" ondragleave="this.classList.remove('over')" ondrop="dropOn('${d}')"><div class="dn"><span>${cal.mode==='week'?fmtDate(d):dt.getDate()}</span>${ps.length?`<span class="small">${ps.length}</span>`:''}</div>${ps.map(chip).join('')}</div>`}).join('')}
+ </div>
+ <div class="card unsched" ondragover="event.preventDefault()" ondrop="dropOn('')"><h3>Unscheduled (${uns.length})</h3><p class="small">Drag from here onto a day, or drop a calendar post here to unschedule. On phones, use Edit → Date.</p>${uns.length?uns.map(chip).join(''):'<div class="small">Everything is on the calendar.</div>'}</div>`;
+};
+function calMove(n){const a=parseYmd(cal.anchor);if(cal.mode==='week')a.setDate(a.getDate()+7*n);else{a.setDate(1);a.setMonth(a.getMonth()+n)}cal.anchor=ymd(a);render()}
+function dropOn(d){const p=findPost(dragId);dragId=null;if(!p)return render();
+ p.date=d;if(d){if(!p.time)p.time='09:00';if(p.status==='Approved')p.status='Scheduled';else if(p.status!=='Scheduled'&&p.status!=='Published')toast('Placed on calendar — approve it to mark as Scheduled.')}
+ else{p.time='';if(p.status==='Scheduled')p.status='Approved'}
+ save();render()}
+
+VIEWS.stories=()=>{
+ return `<div class="row spread"><div><h1>Story bank</h1><p class="sub">Your real experiences. The AI may only use stories you've <b>confirmed</b> and that aren't <b>Private</b>.</p></div><button class="btn primary" onclick="editStory()">+ Add story</button></div>
+ <div class="grid g2">
+ ${S.stories.length?S.stories.map(s=>`<div class="card"><div class="row spread"><h3 style="margin:0">${esc(s.title)}</h3>${s.confirmed?'<span class="okchip">✓ Confirmed</span>':'<span class="warnchip">Needs confirmation</span>'}</div>
+  <div class="meta" style="margin-top:6px"><span class="pill">${esc(s.privacy)}</span><span class="pill">${esc(s.reuse||'Unused')}</span>${s.stage?`<span class="pill">${esc(s.stage)}</span>`:''}<span class="pill">Used in ${S.posts.filter(p=>p.storyId===s.id).length} posts</span></div>
+  ${s.happened?`<p class="small" style="white-space:pre-wrap">${esc(s.happened.slice(0,220))}${s.happened.length>220?'…':''}</p>`:'<p class="small"><i>No details yet.</i></p>'}
+  <div class="actions"><button class="btn" onclick="editStory('${s.id}')">Edit</button>${!s.confirmed?`<button class="btn" onclick="confirmStory('${s.id}')">✓ Confirm</button>`:''}<button class="btn" onclick="genFromStory('${s.id}')">✨ Posts from this</button><button class="btn ghost danger" onclick="delStory('${s.id}')">Delete</button></div></div>`).join(''):'<div class="empty" style="grid-column:1/-1">No stories yet. Start with one of the interview prompts below.</div>'}
+ </div>
+ <div class="card" style="margin-top:16px"><h2>Interview prompts</h2><p class="small">Questions to help you remember real moments. Pick one, then write what actually happened.</p>
+ ${STORY_PROMPTS.map((q,i)=>`<div class="row spread" style="padding:7px 0;border-bottom:1px solid var(--line)"><span>${i+1}. ${esc(q)}</span><button class="btn" onclick="editStory(null,${i})">Write this story</button></div>`).join('')}</div>`;
+};
+function editStory(id,promptIdx){
+ const s=id?S.stories.find(x=>x.id===id):{title:promptIdx!=null?STORY_PROMPTS[promptIdx].replace(/\.$/,''):'',stage:'',happened:'',learned:'',takeaway:'',privacy:'Anonymise details',reuse:'Unused',confirmed:false};
+ openModal(`<h2>${id?'Edit':'New'} story</h2>
+ <div class="field"><label>Story title</label><input id="s_title" value="${esc(s.title)}"></div>
+ <div class="field"><label>Life stage (child's age or phase)</label><input id="s_stage" value="${esc(s.stage)}" placeholder="e.g. when my youngest was four"></div>
+ <div class="field"><label>What happened (only real facts you remember)</label><textarea id="s_happened" style="min-height:120px">${esc(s.happened)}</textarea></div>
+ <div class="field"><label>What I learned</label><textarea id="s_learned">${esc(s.learned)}</textarea></div>
+ <div class="field"><label>Parent takeaway</label><textarea id="s_takeaway" style="min-height:60px">${esc(s.takeaway)}</textarea></div>
+ <div class="grid g2"><div class="field"><label>Privacy level</label><select id="s_privacy">${['Public','Anonymise details','Private'].map(x=>opt(x,x,s.privacy)).join('')}</select></div>
+ <div class="field"><label>Reuse status</label><select id="s_reuse">${['Unused','Used','Needs review'].map(x=>opt(x,x,s.reuse)).join('')}</select></div></div>
+ <label style="display:flex;gap:8px;align-items:flex-start;font-weight:500;color:var(--ink);margin:6px 0 4px"><input type="checkbox" id="s_conf" ${s.confirmed?'checked':''} style="margin-top:4px"> I confirm these details are true and OK to use as autobiographical facts. No identifying details about my children are included unless I chose “Public”.</label>
+ <p class="small">If you change the facts later, re-check this box.</p>
+ <div class="row spread" style="margin-top:10px"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveStory('${id||''}')">Save story</button></div>`);
+}
+function saveStory(id){
+ const v=k=>$('#'+k).value.trim();
+ const data={title:v('s_title')||'Untitled story',stage:v('s_stage'),happened:v('s_happened'),learned:v('s_learned'),takeaway:v('s_takeaway'),privacy:$('#s_privacy').value,reuse:$('#s_reuse').value};
+ let s=id?S.stories.find(x=>x.id===id):null;
+ const changed=s&&['title','stage','happened','learned','takeaway'].some(k=>s[k]!==data[k]);
+ let conf=$('#s_conf').checked;
+ if(changed&&s.confirmed&&conf&&!confirm('You changed the story facts. Keep it confirmed?'))conf=false;
+ if(s)Object.assign(s,data,{confirmed:conf});else{s={id:uid(),...data,confirmed:conf,createdAt:Date.now()};S.stories.unshift(s)}
+ if(conf)s.confirmedAt=Date.now();
+ save();closeModal();render();toast('Story saved');
+}
+function confirmStory(id){const s=S.stories.find(x=>x.id===id);if(!s.happened){toast('Add what happened before confirming.');return editStory(id)}if(confirm(`Confirm “${s.title}” is true and OK to use?`)){s.confirmed=true;s.confirmedAt=Date.now();save();render()}}
+function delStory(id){if(!confirm('Delete this story?'))return;S.stories=S.stories.filter(s=>s.id!==id);save();render()}
+function genFromStory(id){const s=S.stories.find(x=>x.id===id);if(!s.confirmed){toast('Confirm the story first so the AI can use it.');return}if(s.privacy==='Private'){toast('This story is Private — change privacy to use it.');return}genForm.notes=`Build these posts around the confirmed story “${s.title}” (story, reflection, audience question, and a link to a learning activity).`;genForm.useStories=true;const pl=S.pillars.find(p=>/single mum/i.test(p.name));if(pl)genForm.pillar=pl.id;go('generate')}
+
+VIEWS.topics=()=>{
+ const clusters=[...new Set(S.topics.map(t=>t.cluster))];
+ return `<div class="row spread"><div><h1>Topic & SEO bank</h1><p class="sub">Keyword ideas are <b>not validated</b> until you check real search data (e.g. Google Search Console). The AI never estimates search volume.</p></div><button class="btn primary" onclick="editTopic()">+ Add keyword</button></div>
+ <div class="card" style="margin-bottom:14px"><h3>Expand a seed keyword with AI</h3><div class="row"><input id="seedKw" placeholder="e.g. toddler fine motor activities" style="flex:1;min-width:200px"><select id="seedLang" style="width:auto">${opt('en','English')}${opt('id','Bahasa Indonesia')}</select><button class="btn primary" id="seedBtn" onclick="expandSeed()">✨ Expand</button></div><p class="small">Returns long-tail variations, a post idea and an article outline for each — saved as “Idea”.</p></div>
+ ${clusters.length?clusters.map(c=>`<div class="card" style="margin-bottom:12px"><h3>${esc(c)}</h3><div class="tablewrap"><table><tr><th>Keyword</th><th>Intent</th><th>Status</th><th>Product</th><th>Notes</th><th></th></tr>
+ ${S.topics.filter(t=>t.cluster===c).map(t=>`<tr><td><b>${esc(t.keyword)}</b></td><td>${esc(t.intent)}</td><td>${t.status==='Validated'?'<span class="okchip">Validated</span>':'<span class="pill">Idea</span>'}</td><td>${esc(productName(t.product))}</td><td class="small" style="max-width:280px;white-space:pre-wrap">${esc((t.notes||'').slice(0,160))}${(t.notes||'').length>160?'…':''}</td><td style="white-space:nowrap"><button class="btn" onclick="useTopic('${t.id}')">Use</button> <button class="btn" onclick="editTopic('${t.id}')">Edit</button></td></tr>`).join('')}</table></div></div>`).join(''):'<div class="empty">No keywords yet.</div>'}`;
+};
+function useTopic(id){const t=S.topics.find(x=>x.id===id);genForm.topic=t.keyword;if(t.product)genForm.product=t.product;go('generate');toast('Topic added to the generator')}
+function editTopic(id){
+ const t=id?S.topics.find(x=>x.id===id):{keyword:'',cluster:'',intent:'',status:'Idea',product:'',notes:''};
+ openModal(`<h2>${id?'Edit':'New'} keyword</h2>
+ <div class="field"><label>Keyword or parent question</label><input id="t_kw" value="${esc(t.keyword)}"></div>
+ <div class="grid g2"><div class="field"><label>Cluster</label><input id="t_cluster" list="clList" value="${esc(t.cluster)}"><datalist id="clList">${[...new Set(S.topics.map(x=>x.cluster))].map(c=>`<option value="${esc(c)}">`).join('')}</datalist></div>
+ <div class="field"><label>Search intent</label><input id="t_intent" value="${esc(t.intent)}" placeholder="e.g. Product discovery"></div>
+ <div class="field"><label>Validation</label><select id="t_status">${opt('Idea','Idea — not checked',t.status)}${opt('Validated','Validated with real data',t.status)}</select></div>
+ <div class="field"><label>Linked product</label><select id="t_product">${opt('','None',t.product)}${S.products.map(p=>opt(p.id,p.name,t.product)).join('')}</select></div></div>
+ <div class="field"><label>Notes (post idea, outline, data source)</label><textarea id="t_notes">${esc(t.notes)}</textarea></div>
+ <div class="row spread"><div>${id?`<button class="btn ghost danger" onclick="delTopic('${id}')">Delete</button>`:''}</div><div class="row"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveTopic('${id||''}')">Save</button></div></div>`);
+}
+function saveTopic(id){const v=k=>$('#'+k).value.trim();const d={keyword:v('t_kw'),cluster:v('t_cluster')||'Uncategorised',intent:v('t_intent'),status:$('#t_status').value,product:$('#t_product').value,notes:v('t_notes')};if(!d.keyword)return toast('Add a keyword');if(id)Object.assign(S.topics.find(x=>x.id===id),d);else S.topics.unshift({id:uid(),...d});save();closeModal();render()}
+function delTopic(id){if(!confirm('Delete keyword?'))return;S.topics=S.topics.filter(t=>t.id!==id);save();closeModal();render()}
+let seeding=false;
+async function expandSeed(){
+ if(seeding)return;const seed=$('#seedKw').value.trim();const lang=$('#seedLang').value;if(!seed)return toast('Type a seed keyword first');
+ seeding=true;$('#seedBtn').disabled=true;$('#seedBtn').textContent='Working…';
+ try{
+  const txt=await callClaude(systemPrompt(lang),`Seed keyword: "${seed}"
+Suggest 6 long-tail keyword phrases or parent questions related to this seed, for parents of children aged 2–5. Group them into a short cluster name and label the search intent (e.g. Product discovery, Educational information, Parent problem-solving, Practical parenting, Personal connection). Do NOT estimate search volume or competition.
+For each, include one short post idea and a 4–5 heading article outline.
+Return ONLY a JSON array: [{"keyword":"","cluster":"","intent":"","post_idea":"","article_outline":["",""]}]`,2500);
+  const arr=parseJSON(txt);if(!Array.isArray(arr))throw new Error('Unexpected reply');
+  arr.forEach(o=>S.topics.unshift({id:uid(),keyword:o.keyword||'',cluster:o.cluster||seed,intent:o.intent||'',status:'Idea',product:'',notes:`AI suggestion — not validated.\nPost idea: ${o.post_idea||''}\nOutline: ${(o.article_outline||[]).join(' / ')}`}));
+  save();toast(`${arr.length} keyword ideas added`);
+ }catch(e){toast(e.message,5000)}
+ seeding=false;render();
+}
+
+VIEWS.products=()=>`<div class="row spread"><div><h1>Workbook products</h1><p class="sub">Freebies and paid workbooks the generator can connect to posts.</p></div><button class="btn primary" onclick="editProduct()">+ Add product</button></div>
+ <div class="grid g2">${S.products.length?S.products.map(p=>`<div class="card"><div class="row spread"><h3 style="margin:0">${esc(p.name)}</h3><span class="pill">${esc(p.status)}</span></div>
+ <div class="meta" style="margin-top:6px"><span class="pill">${esc(p.type)}</span>${p.price?`<span class="pill">${esc(p.price)}</span>`:''}${p.age?`<span class="pill">Ages ${esc(p.age)}</span>`:''}${p.topic?`<span class="pill">${esc(p.topic)}</span>`:''}<span class="pill">${S.posts.filter(x=>x.product===p.id).length} posts</span></div>
+ ${(p.text||p.desc)?`<p class="small">${esc((p.text||p.desc).slice(0,200))}${(p.text||p.desc).length>200?'…':''}</p>`:'<p class="small"><i>No product text yet. Click Edit to add it.</i></p>'}
+ <div class="actions">${p.url?`<a class="btn" href="${esc(p.url)}" target="_blank" rel="noopener">Open link ↗</a>`:'<span class="small">No Gumroad link yet</span>'}<button class="btn" onclick="editProduct('${p.id}')">Edit</button><button class="btn" onclick="genForm.product='${p.id}';go('generate')">✨ Posts for this</button></div></div>`).join(''):'<div class="empty">No products yet.</div>'}</div>`;
+function editProduct(id){
+ const p=id?S.products.find(x=>x.id===id):{name:'',type:'Paid',price:'',url:'',age:'2–5',topic:'',status:'Idea',desc:'',text:'',facts:''};
+ openModal(`<h2>${id?'Edit':'New'} product</h2>
+ <div class="field"><label>Name</label><input id="p_name" value="${esc(p.name)}"></div>
+ <div class="grid g3"><div class="field"><label>Type</label><select id="p_type">${['Freebie','Paid','Bundle'].map(x=>opt(x,x,p.type)).join('')}</select></div>
+ <div class="field"><label>Price</label><input id="p_price" value="${esc(p.price)}" placeholder="$7"></div>
+ <div class="field"><label>Status</label><select id="p_status">${['Idea','In progress','Live','Retired'].map(x=>opt(x,x,p.status)).join('')}</select></div>
+ <div class="field"><label>Age range</label><input id="p_age" value="${esc(p.age)}"></div>
+ <div class="field" style="grid-column:span 2"><label>Topic</label><input id="p_topic" value="${esc(p.topic)}"></div></div>
+ <div class="field"><label>Gumroad / product URL</label><input id="p_url" value="${esc(p.url)}" placeholder="https://yourname.gumroad.com/l/..."></div>
+ <div class="field"><label>Short description (for your own reference)</label><input id="p_desc" value="${esc(p.desc)}"></div>
+ <div class="field"><label>Product text: what it is, who it is for, what is inside (the AI reads this)</label><textarea id="p_text" style="min-height:130px" placeholder="Write the product in your own words...">${esc(p.text)}</textarea></div>
+ <div class="field"><label>Real facts I confirm (my own experience with this product)</label><textarea id="p_facts" style="min-height:90px" placeholder="e.g. My daughters did 10 minutes a day from age 4...">${esc(p.facts)}</textarea></div>
+ <p class="small">Tip: say "Japanese-style daily practice" instead of a brand name you do not own. Do not promise results.</p>
+ <div class="row spread"><div>${id?`<button class="btn ghost danger" onclick="delProduct('${id}')">Delete</button>`:''}</div><div class="row"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveProduct('${id||''}')">Save</button></div></div>`);
+}
+function saveProduct(id){const v=k=>$('#'+k).value.trim();const d={name:v('p_name'),type:v('p_type'),price:v('p_price'),status:v('p_status'),age:v('p_age'),topic:v('p_topic'),url:v('p_url'),desc:v('p_desc'),text:v('p_text'),facts:v('p_facts')};if(!d.name)return toast('Add a name');if(d.url&&!/^https?:\/\//i.test(d.url))d.url='https://'+d.url;if(id)Object.assign(S.products.find(x=>x.id===id),d);else{const np={id:uid(),...d};S.products.push(np);if(view==='generate')genForm.product=np.id}save();closeModal();render()}
+function delProduct(id){if(!confirm('Delete product? Posts keep their text but lose the link.'))return;S.products=S.products.filter(p=>p.id!==id);S.posts.forEach(p=>{if(p.product===id)p.product=''});save();closeModal();render()}
+
+VIEWS.campaigns=()=>`<h1>Funnel & CTAs</h1><p class="sub">Not every post sells. Direct sales posts are capped at <b>${esc(S.settings.promoCap)}%</b> (change in Brand Settings).</p>
+ <div class="card" style="margin-bottom:14px"><h2>Your funnel</h2><div class="funnel">
+ <div><b>1 · Discovery</b>Threads, X, SEO articles, personal stories</div><div><b>2 · Free printable</b>${esc(S.products.find(p=>p.type==='Freebie')?.name||'Add a freebie')}</div><div><b>3 · Email list</b>Permission-based opt-in only</div><div><b>4 · Paid workbooks</b>Feelings, routines, early maths, bundles</div><div><b>5 · Repeat customers</b>Themed, age-specific, seasonal packs</div></div>
+ <div class="notice info" style="margin:12px 0 0">A free Gumroad download does <b>not</b> automatically mean someone agreed to marketing emails. Use a clear opt-in checkbox and an unsubscribe link.</div></div>
+ <div class="card" style="margin-bottom:14px"><div class="row spread"><h2 style="margin:0">Campaigns</h2><button class="btn primary" onclick="editCampaign()">+ New campaign</button></div>
+ ${S.campaigns.length?`<div class="tablewrap"><table style="margin-top:8px"><tr><th>Campaign</th><th>Goal</th><th>Product</th><th>Dates</th><th>Posts</th><th>Clicks</th><th>Sign-ups</th><th>Sales</th><th></th></tr>${S.campaigns.map(c=>{const ps=S.posts.filter(p=>p.campaign===c.id);const s=k=>ps.reduce((a,p)=>a+num(p.metrics?.[k]),0);return `<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.goal)}</td><td>${esc(productName(c.product))}</td><td class="small">${esc(c.start||'')} → ${esc(c.end||'')}</td><td>${ps.length}</td><td>${s('clicks')}</td><td>${s('signups')}</td><td>${s('sales')}</td><td style="white-space:nowrap"><button class="btn" onclick="copyLinks('${c.id}')">🔗 Links</button> <button class="btn" onclick="editCampaign('${c.id}')">Edit</button></td></tr>`}).join('')}</table></div>`:'<div class="empty" style="margin-top:10px">No campaigns yet. Create one for your freebie launch.</div>'}</div>
+ <div class="card"><div class="row spread"><h2 style="margin:0">CTA library</h2><button class="btn" onclick="S.ctas.push({id:uid(),objective:'Conversation',text:''});save();render()">+ Add CTA</button></div><p class="small">The generator uses these as inspiration and varies the wording.</p>
+ ${S.ctas.map(c=>`<div class="row" style="padding:6px 0;border-bottom:1px solid var(--line)"><select style="width:170px" onchange="ctaSet('${c.id}','objective',this.value)">${OBJECTIVES.filter(o=>o!=='No CTA').map(o=>opt(o,o,c.objective)).join('')}</select><input style="flex:1;min-width:200px" value="${esc(c.text)}" onchange="ctaSet('${c.id}','text',this.value)"><button class="btn ghost danger" onclick="S.ctas=S.ctas.filter(x=>x.id!=='${c.id}');save();render()">✕</button></div>`).join('')}</div>`;
+function ctaSet(id,k,v){S.ctas.find(c=>c.id===id)[k]=v;save()}
+function editCampaign(id){
+ const c=id?S.campaigns.find(x=>x.id===id):{name:'',goal:'Grow email list',product:'',start:'',end:'',utm:'',landing:'',text:''};
+ openModal(`<h2>${id?'Edit':'New'} campaign</h2>
+ <div class="field"><label>Name</label><input id="c_name" value="${esc(c.name)}" placeholder="e.g. Big Feelings freebie launch"></div>
+ <div class="grid g2"><div class="field"><label>Goal</label><select id="c_goal">${['Grow email list','Sell a product','Build awareness','Start conversations'].map(x=>opt(x,x,c.goal)).join('')}</select></div>
+ <div class="field"><label>Product</label><select id="c_product">${opt('','None',c.product)}${S.products.map(p=>opt(p.id,p.name,c.product)).join('')}</select></div>
+ <div class="field"><label>Start</label><input type="date" id="c_start" value="${esc(c.start)}"></div><div class="field"><label>End</label><input type="date" id="c_end" value="${esc(c.end)}"></div></div>
+ <div class="field"><label>Campaign message / angle (the AI reads this)</label><textarea id="c_text" style="min-height:90px" placeholder="e.g. Promote the new detective series. Focus on curiosity and reading together. No promises about results.">${esc(c.text)}</textarea></div>
+ <div class="field"><label>Landing page URL (leave empty to use the product link)</label><input id="c_landing" value="${esc(c.landing)}" placeholder="https://"></div>
+ <div class="field"><label>UTM campaign tag</label><input id="c_utm" value="${esc(c.utm)}" placeholder="auto from name"></div>
+ <div class="row spread"><div>${id?`<button class="btn ghost danger" onclick="delCampaign('${id}')">Delete</button>`:''}</div><div class="row"><button class="btn ghost" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveCampaign('${id||''}')">Save</button></div></div>`);
+}
+const slug=s=>String(s).toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40);
+function saveCampaign(id){const v=k=>$('#'+k).value.trim();const d={name:v('c_name'),goal:v('c_goal'),product:v('c_product'),start:v('c_start'),end:v('c_end'),landing:v('c_landing'),utm:v('c_utm'),text:v('c_text')};if(!d.name)return toast('Add a name');if(!d.utm)d.utm=slug(d.name);if(id)Object.assign(S.campaigns.find(x=>x.id===id),d);else{const nc={id:uid(),...d};S.campaigns.push(nc);if(view==='generate')genForm.campaign=nc.id}save();closeModal();render()}
+function delCampaign(id){if(!confirm('Delete campaign?'))return;S.campaigns=S.campaigns.filter(c=>c.id!==id);S.posts.forEach(p=>{if(p.campaign===id)p.campaign=''});save();closeModal();render()}
+function tracked(c,source){const base=c.landing||S.products.find(p=>p.id===c.product)?.url||'';if(!base)return '';try{const u=new URL(base);u.searchParams.set('utm_source',source);u.searchParams.set('utm_medium','social');u.searchParams.set('utm_campaign',c.utm||slug(c.name));return u.toString()}catch(e){return ''}}
+function copyLinks(id){const c=S.campaigns.find(x=>x.id===id);const t=tracked(c,'threads'),x=tracked(c,'x');if(!t){toast('Add a landing URL or a product link first.');return editCampaign(id)}
+ openModal(`<h2>Tracked links · ${esc(c.name)}</h2><p class="small">Use these in posts so clicks can be traced to each platform.</p>
+ <div class="field"><label>Threads</label><div class="row"><input readonly value="${esc(t)}" style="flex:1"><button class="btn" onclick="copyText('${esc(t)}')">Copy</button></div></div>
+ <div class="field"><label>X</label><div class="row"><input readonly value="${esc(x)}" style="flex:1"><button class="btn" onclick="copyText('${esc(x)}')">Copy</button></div></div>
+ <div class="row" style="justify-content:flex-end"><button class="btn primary" onclick="closeModal()">Done</button></div>`)}
+
+VIEWS.analytics=()=>{
+ const pub=S.posts.filter(p=>p.status==='Published'||Object.keys(p.metrics||{}).length);
+ const sum=(ps,k)=>ps.reduce((a,p)=>a+num(p.metrics?.[k]),0);
+ const er=ps=>{const i=sum(ps,'impressions');return i?((sum(ps,'replies')+sum(ps,'reposts')+sum(ps,'likes'))/i*100).toFixed(1)+'%':'—'};
+ const group=(keyFn,labelFn)=>{const g={};pub.forEach(p=>{const k=keyFn(p)||'—';(g[k]=g[k]||[]).push(p)});return Object.entries(g).map(([k,ps])=>`<tr><td>${esc(labelFn(k))}</td><td>${ps.length}</td><td>${sum(ps,'impressions').toLocaleString()}</td><td>${er(ps)}</td><td>${sum(ps,'replies')}</td><td>${sum(ps,'clicks')}</td><td>${sum(ps,'signups')}</td><td>${sum(ps,'sales')}</td><td>$${sum(ps,'revenue').toLocaleString()}</td></tr>`).join('')};
+ const head='<tr><th></th><th>Posts</th><th>Impressions</th><th>Eng. rate</th><th>Replies</th><th>Clicks</th><th>Sign-ups</th><th>Sales</th><th>Revenue</th></tr>';
+ const top=[...pub].sort((a,b)=>(num(b.metrics?.replies)+num(b.metrics?.reposts))-(num(a.metrics?.replies)+num(a.metrics?.reposts))).slice(0,5);
+ const toEnter=S.posts.filter(p=>p.status==='Published'||p.status==='Scheduled');
+ return `<h1>Analytics</h1><p class="sub">Enter real numbers from Threads, X, your email tool and Gumroad. Nothing here is estimated.</p>
+ <div class="grid g4" style="margin-bottom:14px">
+  <div class="card stat"><b>${sum(pub,'impressions').toLocaleString()}</b><span>Reach · impressions</span></div>
+  <div class="card stat"><b>${(sum(pub,'replies')+sum(pub,'reposts')).toLocaleString()}</b><span>Engagement · rate ${er(pub)}</span></div>
+  <div class="card stat"><b>${sum(pub,'clicks')} / ${sum(pub,'signups')}</b><span>Acquisition · clicks / sign-ups</span></div>
+  <div class="card stat"><b>$${sum(pub,'revenue').toLocaleString()}</b><span>Revenue · ${sum(pub,'sales')} sales</span></div>
+ </div>
+ <div class="card" style="margin-bottom:14px"><h2>Record performance</h2><p class="small">Published and scheduled posts. Changes save instantly.</p>
+ ${toEnter.length?`<div class="tablewrap"><table><tr><th>Post</th><th>Status</th>${MET.map(([,l])=>`<th>${l}</th>`).join('')}</tr>${toEnter.map(p=>`<tr><td style="min-width:200px"><span class="pill ${p.platform}">${p.platform}</span> ${esc(p.hook.slice(0,60))}${p.hook.length>60?'…':''}<div class="small">${fmtDate(p.date)}</div></td><td><select class="status s-${p.status}" onchange="setStatus('${p.id}',this.value)">${STATUSES.map(s=>opt(s,s,p.status)).join('')}</select></td>${MET.map(([k])=>`<td><input type="number" min="0" step="any" value="${esc(p.metrics?.[k]??'')}" onchange="setMetric('${p.id}','${k}',this.value)"></td>`).join('')}</tr>`).join('')}</table></div>`:'<div class="empty">Mark posts as Published to record their numbers.</div>'}</div>
+ ${pub.length?`<div class="card" style="margin-bottom:14px"><h2>By pillar</h2><div class="tablewrap"><table>${head}${group(p=>p.pillar,pillarName)}</table></div></div>
+ <div class="grid g2"><div class="card"><h2>By platform</h2><div class="tablewrap"><table>${head}${group(p=>p.platform,k=>k)}</table></div></div>
+ <div class="card"><h2>By CTA objective</h2><div class="tablewrap"><table>${head}${group(p=>p.ctaObjective,k=>k)}</table></div></div></div>
+ <div class="card" style="margin-top:14px"><h2>Most conversation</h2>${top.map(p=>`<div class="row" style="padding:7px 0;border-bottom:1px solid var(--line)"><span class="pill ${p.platform}">${p.platform}</span><span style="flex:1">${esc(p.hook)}</span><span class="small">${num(p.metrics?.replies)} replies · ${num(p.metrics?.reposts)} reposts</span>${p.url?`<a href="${esc(p.url)}" target="_blank" rel="noopener">↗</a>`:''}</div>`).join('')}</div>`:''}`;
+};
+function setMetric(id,k,v){const p=findPost(id);p.metrics=p.metrics||{};if(v==='')delete p.metrics[k];else p.metrics[k]=num(v);save()}
+
+VIEWS.settings=()=>{
+ const st=S.settings;const tot=S.pillars.reduce((a,p)=>a+num(p.target),0);
+ const set=k=>`onchange="S.settings.${k}=this.value;save();toast('Saved')"`;
+ return `<h1>Brand settings</h1><p class="sub">Voice, rules, pillars, AI connection and your data.</p>
+ <div class="card" style="margin-bottom:14px"><h2>AI connection</h2>
+ <div class="grid g2"><div class="field"><label>Anthropic API key</label><div class="row"><input type="password" id="apikey" value="${esc(st.apiKey)}" placeholder="sk-ant-..." style="flex:1" onchange="S.settings.apiKey=this.value.trim();save();render();toast('API key saved in this browser')"><button class="btn" onclick="const i=$('#apikey');i.type=i.type==='password'?'text':'password'">👁</button></div></div>
+ <div class="field"><label>Model</label><input list="models" value="${esc(st.model)}" ${set('model')}><datalist id="models"><option value="claude-sonnet-5-5"><option value="claude-opus-5-5"><option value="claude-haiku-5-5"></datalist></div></div>
+ <p class="small">The key is stored only in this browser (localStorage) and sent directly to Anthropic. It is never included in backups or CSV exports. Don't use this on a shared computer. Get a key at console.anthropic.com.</p>
+ <div class="row"><button class="btn" onclick="testKey()">Test connection</button>${st.apiKey?`<button class="btn ghost danger" onclick="S.settings.apiKey='';save();render()">Remove key</button>`:''}</div></div>
+ <div class="card" style="margin-bottom:14px"><h2>Brand voice</h2>
+ <div class="grid g2"><div class="field"><label>Default content language</label><select onchange="S.settings.lang=this.value;genForm.lang=this.value;save();toast('Saved')">${opt('en','English',st.lang)}${opt('id','Bahasa Indonesia',st.lang)}</select></div>
+ <div class="field"><label>Max share of direct sales posts (%)</label><input type="number" min="0" max="100" value="${esc(st.promoCap)}" ${set('promoCap')}></div></div>
+ <div class="field"><label>Voice & tone</label><textarea ${set('voice')}>${esc(st.voice)}</textarea></div>
+ <div class="field"><label>Audience</label><textarea ${set('audience')}>${esc(st.audience)}</textarea></div>
+ <div class="field"><label>Founder background (facts the AI may state)</label><textarea ${set('founder')}>${esc(st.founder)}</textarea></div>
+ <div class="field"><label>Extra writing rules (one per line)</label><textarea ${set('extraRules')} placeholder="e.g. Use British spelling&#10;Never mention specific schools">${esc(st.extraRules)}</textarea></div>
+ <p class="small">Built-in safeguards always apply: no invented stories, testimonials or research; no guaranteed outcomes; no clinical claims; children's details stay private.</p></div>
+ <div class="card" style="margin-bottom:14px"><div class="row spread"><h2 style="margin:0">Content pillars</h2><span class="${tot===100?'okchip':'warnchip'}">Targets total ${tot}%</span></div>
+ ${S.pillars.map(p=>`<div class="row" style="padding:8px 0;border-bottom:1px solid var(--line)"><input style="flex:1;min-width:180px" value="${esc(p.name)}" onchange="pSet('${p.id}','name',this.value)"><input style="flex:2;min-width:200px" value="${esc(p.desc)}" onchange="pSet('${p.id}','desc',this.value)"><input type="number" style="width:80px" value="${esc(p.target)}" onchange="pSet('${p.id}','target',this.value)"><span>%</span><button class="btn ghost danger" onclick="delPillar('${p.id}')">✕</button></div>`).join('')}
+ <button class="btn" style="margin-top:10px" onclick="S.pillars.push({id:uid(),name:'New pillar',desc:'',target:0});save();render()">+ Add pillar</button></div>
+ <div class="card"><h2>Your data</h2><p class="small">Everything is saved in this browser. Download a backup regularly — clearing browser data deletes it. Backups do not include your API key.</p>
+ <div class="row"><button class="btn" onclick="exportPosts()">⬇ Posts CSV</button><button class="btn" onclick="exportCalendar()">⬇ Calendar CSV</button><button class="btn" onclick="backup()">⬇ Full backup (JSON)</button><label class="btn" style="margin:0;color:var(--ink);font-weight:400">⬆ Restore backup<input type="file" accept=".json,application/json" style="display:none" onchange="restore(this.files[0])"></label><button class="btn ghost danger" onclick="resetAll()">Reset everything</button></div></div>`;
+};
+function pSet(id,k,v){const p=pillarById(id);p[k]=k==='target'?num(v):v;save();render()}
+function delPillar(id){const n=S.posts.filter(p=>p.pillar===id).length;if(!confirm(`Delete this pillar?${n?` ${n} posts will become Unassigned.`:''}`))return;S.pillars=S.pillars.filter(p=>p.id!==id);S.posts.forEach(p=>{if(p.pillar===id)p.pillar=''});(S.ideas||[]).forEach(i=>{if(i.pillar===id)i.pillar=''});save();render()}
+async function testKey(){toast('Testing…');try{const t=await callClaude('Reply with the single word OK.','Ping',10);toast('Connected ✓ '+t.trim().slice(0,20))}catch(e){toast(e.message,5000)}}
+
+/* ============ Export / backup ============ */
+function exportPosts(){
+ const head=['id','status','platform','language','pillar','hook','body','cta','full_text','cta_objective','seo_terms','product','campaign','story','reuse_suggestion','date','time','published_url',...MET.map(m=>m[0]),'created'];
+ const rows=S.posts.map(p=>[p.id,p.status,p.platform,p.lang==='id'?'Indonesian':'English',pillarName(p.pillar),p.hook,p.body,p.cta,fullText(p),p.ctaObjective,(p.seo||[]).join('; '),productName(p.product),campaignName(p.campaign),S.stories.find(s=>s.id===p.storyId)?.title||'',p.reuse,p.date,p.time,p.url,...MET.map(([k])=>p.metrics?.[k]??''),new Date(p.createdAt).toISOString()]);
+ download(`mums-wisdom-posts-${ymd(new Date())}.csv`,csv([head,...rows]),'text/csv');
+}
+function exportCalendar(){
+ const ps=S.posts.filter(p=>p.date).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ if(!ps.length)return toast('No posts on the calendar yet.');
+ download(`mums-wisdom-calendar-${ymd(new Date())}.csv`,csv([['date','time','platform','status','pillar','hook','full_text','campaign','published_url'],...ps.map(p=>[p.date,p.time,p.platform,p.status,pillarName(p.pillar),p.hook,fullText(p),campaignName(p.campaign),p.url])]),'text/csv');
+}
+function backup(){const c=JSON.parse(JSON.stringify(S));c.settings.apiKey='';download(`mums-wisdom-backup-${ymd(new Date())}.json`,JSON.stringify(c,null,2),'application/json')}
+function restore(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d||!Array.isArray(d.posts)||!d.settings)throw 0;if(!confirm(`Restore backup with ${d.posts.length} posts? This replaces current data (your API key is kept).`))return;const key=S.settings.apiKey;S=d;S.settings.apiKey=key;(function(){const df=defaults();for(const k of Object.keys(df))if(S[k]===undefined)S[k]=df[k]})();ensureIdeas();save();render();toast('Backup restored')}catch(e){toast('That file is not a valid Mum\'s Wisdom backup.')}};r.readAsText(file)}
+function resetAll(){if(!confirm('Delete ALL posts, stories, products and settings in this browser?'))return;if(!confirm('Are you sure? Download a backup first if unsure.'))return;S=defaults();ensureIdeas();save();lastBatch='';render();toast('Reset complete')}
+
+document.addEventListener('click',e=>{document.querySelectorAll('details.menu[open]').forEach(d=>{if(!d.contains(e.target))d.open=false})});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+render();
+</script>
+</body>
