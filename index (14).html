@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Worksheet Prompt Studio — Nano Banana</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#fff7fb;--card:#fff;--ink:#2b2340;--mut:#7a7191;--pri:#ff5fa2;--pri2:#ffb703;--line:#f0dcea;--out:#fdf2f8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1626;--card:#262033;--ink:#f4eefc;--mut:#a99fc0;--pri:#ff7ab5;--pri2:#ffc533;--line:#3a3150;--out:#201a2c}}
+:root[data-theme="dark"]{--bg:#1b1626;--card:#262033;--ink:#f4eefc;--mut:#a99fc0;--pri:#ff7ab5;--pri2:#ffc533;--line:#3a3150;--out:#201a2c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:4px 0}h2{font-size:15px;margin:0 0 8px}
+.sub,.tip{color:var(--mut);font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+label{display:block;font-size:12px;font-weight:700;color:var(--mut);margin:0 0 4px;text-transform:uppercase;letter-spacing:.04em}
+select,input[type=text],input[type=password],input[type=number],textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+textarea{min-height:60px;resize:vertical}
+.full{grid-column:1/-1}
+.chk{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+.chk label{display:flex;align-items:center;gap:6px;text-transform:none;font-size:14px;color:var(--ink);font-weight:500;letter-spacing:0}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{border:0;border-radius:12px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer;background:var(--pri);color:#fff}
+button.alt{background:var(--pri2);color:#3b2a00}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button:disabled{opacity:.5}
+.out{background:var(--out);border:1px dashed var(--pri);border-radius:14px;padding:12px;margin-top:10px}
+.out h3{margin:0 0 6px;font-size:14px}
+.out pre{white-space:pre-wrap;word-break:break-word;margin:0 0 8px;font:13px/1.5 ui-monospace,Menlo,monospace}
+.key{display:inline-block;background:var(--pri2);color:#3b2a00;border-radius:8px;padding:2px 8px;font-size:12px;font-weight:700;margin-bottom:6px}
+.imgs{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.imgs div{width:calc(50% - 5px);min-width:150px}
+.imgs img{width:100%;border-radius:10px;border:1px solid var(--line);display:block}
+.imgs a{display:block;text-align:center;font-size:13px;margin-top:4px;color:var(--pri)}
+.st{font-size:13px;margin-top:6px;color:var(--mut)}
+.pin{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line)}.pin h3{margin:0 0 8px}.pin label{margin-top:8px}.pin .btns{margin-top:6px}
+.note{font-size:13px;margin-top:6px;padding:8px 10px;border-radius:10px;background:var(--out);border:1px solid var(--line);color:var(--mut)}.note.warn{border-color:var(--pri2);color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>🍌 Worksheet Prompt Studio</h1>
+<p class="sub">Claude menulis prompt worksheet anak yang siap ditempel ke Nano Banana. <b>Versi 5.1</b></p>
+
+<div class="card">
+<h2>🔑 Koneksi Claude (Anthropic API)</h2>
+<div class="grid">
+<div class="full"><label>Anthropic API key</label><input id="key" type="password" placeholder="sk-ant-..." autocomplete="off"></div>
+<div><label>Model Claude</label><input id="model" type="text" list="models" value="claude-sonnet-5-5"><datalist id="models"><option value="claude-sonnet-5-5"><option value="claude-haiku-5-5"><option value="claude-opus-5-5"></datalist></div>
+<div class="chk"><label><input type="checkbox" id="useai" checked> Sempurnakan prompt dengan Claude</label><label><input type="checkbox" id="remember"> Ingat key di browser ini</label></div>
+</div>
+<div class="st">Key hanya disimpan di browser kamu dan dikirim langsung ke Anthropic. Tanpa key, dashboard tetap membuat prompt draft otomatis. Haiku lebih murah, Sonnet lebih rapi.</div>
+</div>
+
+<div class="card">
+<div class="grid">
+<div class="full"><label>Jenis worksheet</label><select id="type"></select></div>
+<div><label>Usia (mengubah isi &amp; tingkat kesulitan prompt)</label><select id="age"><option value="3-5">3–5 tahun</option><option value="4-6" selected>4–6 tahun</option><option value="5-8">5–8 tahun</option><option value="6-9">6–9 tahun</option></select></div>
+<div><label>Jumlah item (kosong = otomatis sesuai usia)</label><input id="n" type="number" min="3" max="8" placeholder="otomatis"></div>
+<div class="full"><label>Huruf (mis. a-e atau U R B L K P)</label><input id="letters" type="text" value="a-e"></div>
+<div class="full"><label id="wl">Kata / pasangan (opsional)</label><textarea id="words"></textarea></div>
+<div><label>Gaya visual</label><select id="style"></select></div>
+<div><label>Ukuran</label><select id="ratio"><option value="3:4">A4 portrait (3:4)</option><option value="4:5">Threads (4:5)</option><option value="1:1">Square (1:1)</option></select></div>
+<div class="full"><label>Warna dominan</label><input id="color" type="text" value="soft pink, sky blue and sunshine yellow"></div>
+<div class="full"><div class="note" id="stnote" style="display:none"></div></div>
+<div class="full"><label>Style lock (opsional): karakter atau gaya tetap untuk semua halaman</label><textarea id="lock" placeholder="mis. Karakter tetap: Mia, anak perempuan berkuncir dua, piyama pink; Leo, anak laki-laki berbaju biru bergaris"></textarea></div>
+<div class="full"><label>Catatan tambahan</label><textarea id="extra"></textarea></div>
+<div><label>Link Pinterest (opsional)</label><input id="plink" type="text" placeholder="https://..."></div>
+<div><label>CTA di deskripsi</label><input id="cta" type="text" value="Get the free worksheet"></div>
+</div>
+<div class="chk">
+<label><input type="checkbox" id="hdr" checked> Name &amp; Date</label>
+<label><input type="checkbox" id="brand" checked> Brand atas &amp; bawah</label>
+<label><input type="checkbox" id="face" checked> Smiley rating</label>
+</div>
+<div class="btns">
+<button id="go">✨ Buat prompt</button>
+<button class="alt" id="pack1">📦 Paket Phonics (5)</button>
+<button class="alt" id="pack2">🧩 Paket Puzzle (5)</button>
+<button class="alt" id="pack3">🎨 Paket Dasar (3)</button>
+<button class="ghost" id="theme">🌓</button>
+</div>
+</div>
+
+<div id="results"></div>
+<p class="tip">Puzzle: “Kunci jawaban” di tiap kartu hanya untukmu, jangan ditempel ke gambar. Kalau potongan di hasil Nano Banana tidak cocok, generate ulang dan pilih hasil terbaik.</p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const BANK={a:'apple',b:'ball',c:'cat',d:'dog',e:'egg',f:'fish',g:'goat',h:'hat',i:'igloo',j:'jam',k:'kite',l:'lion',m:'moon',n:'nest',o:'orange',p:'pig',q:'queen',r:'rabbit',s:'sun',t:'tree',u:'umbrella',v:'van',w:'whale',x:'xylophone',y:'yo-yo',z:'zebra'};
+const STYLES={'Auto · best for each worksheet':'','Flat vector cute':'cute flat vector cartoon style with thick clean outlines, solid colors and no gradients','Kawaii pastel':'kawaii pastel style with soft rounded shapes, tiny blush cheeks, a gentle pastel palette and simple shapes','Glossy 3D cartoon':'glossy 3D cartoon style with soft studio lighting, rounded chunky shapes, smooth shiny surfaces, big expressive eyes and soft drop shadows','Realistic glossy':'semi-realistic glossy illustration style with vivid saturated colors, soft highlights, gentle shadows and clean white space around each object','Clay / plasticine 3D':'handmade clay plasticine 3D style with soft fingerprint textures, rounded chunky forms and warm lighting','Storybook watercolor':'soft storybook watercolor style with gentle color washes, hand-painted texture and delicate pencil outlines','Crayon hand-drawn':'hand-drawn crayon and colored pencil style with a warm childlike texture and slightly wobbly lines','Paper cut collage':'layered paper-cut collage style with soft cut-paper edges, subtle paper texture and small shadows between layers','Chibi cute':'chibi cartoon style with oversized heads, tiny bodies, big sparkling eyes and simple clean shading','Retro vintage':'retro vintage children’s book style with a muted warm palette, subtle print grain and simple geometric shapes','Sticker style':'die-cut sticker style with bold outlines, a thick white border around each picture and bright flat colors','Line art black & white':'clean black and white line art only, no color, no gray fills, printer-friendly','Rainbow border playful':'bright rainbow rounded border frame, playful flat vector cartoon style','Polka dot pink':'pink polka-dot frame, kawaii flat vector cartoon style'};
+const TYPES={
+match_letters:['Phonics · Match Beginning Letter Sound',1,'Tidak perlu diisi (otomatis dari huruf)'],
+begin_sound:['Phonics · Draw Lines Beginning Sound',1,'Tidak perlu diisi (otomatis dari huruf)'],
+missing_letters:['Phonics · Missing Letters',1,'Opsional: kata dipisah koma, mis. apple, banana, carrot'],
+rhyme:['Phonics · Rhyme-Time Matching',1,'Opsional: pasangan dengan tanda -, mis. cat-hat, bug-rug'],
+read_connect:['Phonics · Read and Connect',1,'Opsional: kata dipisah koma, mis. cat, mat, rat'],
+missing_piece:['Puzzle · Find the Missing Piece',2,'Format: adegan | isi potongan yang hilang | pilihan salah 1 | salah 2 | salah 3\nmis. a happy green frog on a lily pad in a blue pond | a pink lotus flower on blue water | a yellow duck | a jumping fish | a red mushroom'],
+shadow:['Puzzle · Shadow Matching',2,'Opsional: hewan dipisah koma, mis. lion, turtle, elephant'],
+what_next:['Puzzle · What Comes Next?',2,'Opsional: 4 langkah dipisah |, mis. a gnome digs a hole | puts a seed | waters it | strawberries grow'],
+spot_diff:['Puzzle · Spot the Differences',2,'Opsional: adegan, mis. a tiger, elephant and hippo on lily pads'],
+maze:['Puzzle · Little Maze',2,'Opsional: cerita, mis. a rabbit must reach a crate of carrots'],
+counting:['Dasar · Counting (hitung gambar)',3,'Opsional: objek dipisah koma, mis. apples, stars, ducks'],
+tracing:['Dasar · Tracing Huruf',3,'Opsional: tidak perlu diisi (otomatis dari kolom huruf & usia)'],
+coloring:['Dasar · Coloring Page',3,'Opsional: objek, mis. a cute elephant holding a balloon (kosong = huruf pertama + gambarnya)']};
+const AGE={
+'3-5':{cap:4,lvl:'extra easy for ages 3-5: only very simple everyday pictures, huge letters, lots of empty space, very few elements per page',diff:3,cnt:5,k:3,pos:'f',maze:'a very simple maze with very wide paths and only two short dead ends',rh:[['cat','hat'],['sun','bun'],['bee','tree']],rd:['cat','mat','sun','hat'],sh:['dog','cat','duck','fish']},
+'4-6':{cap:5,lvl:'easy for ages 4-6: simple clear pictures, large letters, comfortable spacing',diff:5,cnt:10,k:3,pos:'f',maze:'a simple maze with wide paths and a few dead ends',rh:[['cat','hat'],['bug','rug'],['star','car'],['bee','tree'],['sun','bun']],rd:['cat','mat','rat','hat','bat'],sh:['crocodile','turtle','lion','elephant']},
+'5-8':{cap:6,lvl:'medium for ages 5-8: more detailed pictures, standard letter size, a bit more to find',diff:6,cnt:15,k:3,pos:'l',maze:'a medium maze with several dead ends',rh:[['cat','hat'],['bug','rug'],['star','car'],['bee','tree'],['moon','spoon'],['boat','goat']],rd:['ship','shop','chip','chop','fish','dish'],sh:['crocodile','turtle','lion','elephant','giraffe','monkey']},
+'6-9':{cap:8,lvl:'challenging for ages 6-9: richly detailed pictures, smaller text, more items, subtle details',diff:7,cnt:20,k:4,pos:'m',maze:'a detailed maze with narrow paths and many dead ends',rh:[['cat','hat'],['bug','rug'],['star','car'],['bee','tree'],['moon','spoon'],['boat','goat'],['snake','cake'],['house','mouse']],rd:['train','rain','snail','tail','frog','log','crab','cab'],sh:['crocodile','turtle','lion','elephant','giraffe','monkey','zebra','penguin']}};
+const RT={'3:4':'A4 portrait, 3:4 aspect ratio','4:5':'portrait 4:5 aspect ratio','1:1':'square 1:1 aspect ratio'};
+Object.entries(TYPES).forEach(([k,v])=>$('type').add(new Option(v[0],k)));
+Object.keys(STYLES).forEach(k=>$('style').add(new Option(k,k)));
+const setWL=()=>{$('words').placeholder=TYPES[$('type').value][2];updNote()};
+$('style').onchange=updNote;
+function updNote(){
+ const n=$('stnote'),k=$('style').value,t=$('type').value;
+ const D3=['Glossy 3D cartoon','Realistic glossy','Clay / plasticine 3D'],SENS=['match_letters','begin_sound','missing_letters','rhyme','read_connect','missing_piece','shadow','what_next','spot_diff','maze','counting','tracing'];
+ if(D3.includes(k)){const w=SENS.includes(t);n.style.display='block';n.className='note'+(w?' warn':'');n.textContent=(w?'⚠ ':'')+'Note: Realistic and 3D styles are more likely to cause misspelled letters and wrong counts. For puzzles, tracing, and counting, flat vector or kawaii is more reliable. 3D or realistic styles work best for flashcards and picture vocabulary.'}
+ else if(k.startsWith('Auto')){n.style.display='block';n.className='note';n.textContent='Auto: flat vector for worksheets, line art for coloring pages.'}
+ else n.style.display='none';
+}
+$('type').onchange=setWL;setWL();
+
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const WB={a:'apple,ant,acorn,alligator',b:'ball,bear,bat,bus,banana',c:'cat,car,cake,cow,cup',d:'dog,duck,drum,door,dinosaur',e:'egg,elephant,envelope',f:'fish,frog,fox,fan,flower',g:'goat,grapes,guitar,gift,giraffe',h:'hat,horse,house,hen,heart',i:'igloo,ice cream,insect,iguana',j:'jam,jar,jellyfish,jet,juice',k:'kite,king,key,koala',l:'lion,leaf,lemon,lamp,ladybug',m:'moon,mouse,monkey,mop,milk',n:'nest,nose,net,nut',o:'orange,octopus,owl,otter',p:'pig,panda,pizza,penguin,pen',q:'queen,quilt',r:'rabbit,rainbow,robot,rat,ring',s:'sun,snake,star,sock,sheep',t:'tree,tiger,turtle,train,tent',u:'umbrella,unicorn',v:'van,vase,violin,volcano',w:'whale,watermelon,worm,wolf',x:'xylophone',y:'yo-yo,yak,yarn,yacht',z:'zebra,zipper'};
+const ANI={a:'ant,alligator',b:'bear,bee,bat',c:'cat,cow,camel',d:'dog,duck,dolphin',e:'elephant',f:'fish,frog,fox',g:'giraffe,goat,gorilla',h:'horse,hen,hippo',i:'iguana',j:'jellyfish',k:'koala,kangaroo',l:'lion,ladybug',m:'monkey,mouse',n:'narwhal',o:'owl,octopus,otter',p:'panda,pig,penguin',q:'quail',r:'rabbit,rooster',s:'snake,sheep,seal',t:'tiger,turtle',u:'unicorn',v:'vulture',w:'whale,wolf,worm',y:'yak',z:'zebra'};
+const FAM=['cat,hat,bat,mat,rat','fan,pan,man,can,van','dog,log,frog','bug,rug,mug,hug,jug','cake,snake,lake','car,star,jar','bee,tree,key','moon,spoon','boat,goat,coat','house,mouse','sun,bun','pig,wig','hen,pen','bed,sled','fox,box','sock,clock,rock','rain,train','ring,king,wing','bell,shell','ship,lip','map,cap','snail,tail,nail','bear,chair','kite,light'].map(f=>f.split(','));
+const MP=[['a happy green frog on a lily pad in a blue pond with cattails and dragonflies','a pink lotus flower floating on blue water',['a yellow duck on water','a blue jumping fish','a red mushroom on grass']],
+['a smiling brown bear sitting in a sunny forest next to a tree','a jar of golden honey with a wooden spoon',['a blue butterfly','a red apple on the ground','a small gray rock']],
+['a cute white bunny in a vegetable garden with a wooden fence','a big orange carrot growing in brown soil',['a green watering can','a yellow sunflower','a little blue bird']],
+['a friendly orange fish swimming in a coral reef with bubbles','a purple seashell lying on the sand',['a red crab','a green seaweed plant','a gray stone']],
+['a tiny kitten sitting by a window with flower pots and a rainbow outside','a ball of pink yarn',['a red toy car','a green frog','a yellow banana']]];
+const WN=['a gnome planting strawberries','a child baking a cake','a seed growing into a sunflower','a bunny building a snowman','a bird building a nest','a boy brushing his teeth before bed'];
+const SD=['a tiger, an elephant, a lion and a hippo sitting on lily-pad islands in a blue river','a bear family having a picnic under a big tree','farm animals (cow, pig, sheep, hen) around a red barn','a pirate ship with sea animals and a treasure island','a space scene with a friendly astronaut, planets and a rocket','a snowy village with a snowman, penguins and a sled'];
+const MZ=['a rabbit must reach a crate of carrots; a hedgehog and a fox sit along the way','a bee must reach a big flower; ladybugs and butterflies sit along the way','a puppy must reach its bone; a cat and a bird sit along the way','a little bear must reach a honey pot; bees and a squirrel sit along the way','a fish must reach a treasure chest; a crab and a turtle sit along the way'];
+function pick(c,age){const all=(WB[c]||c).split(',');const mx=age==='3-5'?4:age==='4-6'?5:99;const f=all.filter(w=>w.length<=mx);return rnd(f.length?f:all)}
+function rhymePairs(L){const used=[],out=[];for(const c of L){const fs=FAM.filter(f=>f.some(w=>w[0]===c)&&!used.includes(f));if(!fs.length)continue;const f=rnd(fs);used.push(f);const a=rnd(f.filter(w=>w[0]===c));out.push([a,rnd(f.filter(w=>w!==a))])}return out}
+function letters(){const s=$('letters').value.trim().toLowerCase();const m=s.match(/^([a-z])\s*-\s*([a-z])$/);
+ if(m){const r=[];for(let i=m[1].charCodeAt(0);i<=m[2].charCodeAt(0);i++)r.push(String.fromCharCode(i));return r}return s.match(/[a-z]/g)||[]}
+const rot=a=>a.length>1?a.slice(1).concat(a[0]):a;
+const uq=a=>[...new Set(a)];
+const der=a=>{if(a.length<2)return a.slice();let r;do{r=shuf(a)}while(r.some((x,i)=>x===a[i]));return r};
+function pick2(c,age,not){const all=(WB[c]||c).split(',').filter(w=>w!==not);const mx=age==='3-5'?4:age==='4-6'?5:99;const f=all.filter(w=>w.length<=mx);return rnd(f.length?f:(all.length?all:[not]))}
+
+const J=a=>a.join(', ');
+function blank(w,p){return p==='f'?'_'+w.slice(1):p==='l'?w.slice(0,-1)+'_':w[0]+'_'+w.slice(2)}
+
+function build(t){
+ const A=AGE[$('age').value],age=$('age').value;
+ const N=Math.min(Math.max(3,+$('n').value||A.cap),A.cap);
+ const L=letters().slice(0,N);const pw={};L.forEach(c=>pw[c]=pick(c,age));const pics=L.map(c=>pw[c]);
+ const LR=L.length>2&&L.every((c,i)=>i===0||c.charCodeAt(0)===L[i-1].charCodeAt(0)+1)?L[0].toUpperCase()+'–'+L[L.length-1].toUpperCase():J(L.map(c=>c.toUpperCase()));
+ const mot=rnd(['tiny stars and sparkles','little hearts','rainbow stripes','polka dots','fluffy clouds','small flowers','leaves and butterflies']),mas=rnd(['bunny','kitten','puppy','panda','duckling','fox','koala','bear cub']),ttl=rnd(['bold colorful bubble letters','rainbow lettering with a white outline','a playful hand-lettered rounded font','chunky cartoon letters with a soft shadow']);
+ const raw=$('words').value.trim();
+ const custom=raw.split(',').map(s=>s.trim()).filter(Boolean);
+ const sk0=$('style').value;const st=(t==='coloring')?STYLES['Line art black & white']:(sk0.startsWith('Auto')?STYLES['Flat vector cute']:STYLES[sk0]);
+ const lockV=$('lock').value.trim().slice(0,400);const lockT=lockV?` Consistency lock (keep identical on every page): ${lockV}.`:'';
+ const hdr=$('hdr').checked?'A top row with two rounded input boxes labeled “Name:” and “Date:”.':'';
+ const brand=$('brand').checked?'Small header text “The Little Chic Co.” at the very top and small footer text “@momalexas” at the very bottom.':'';
+ const face=$('face').checked?'At the bottom, three tiny smiley faces labeled “Loved it”, “Liked it”, “Not too much”, each with a checkbox.':'';
+ const extra=$('extra').value.trim();
+ const base=`Create a printable children’s educational worksheet, ${RT[$('ratio').value]}. Difficulty: ${A.lvl}. Style: ${st}. Dominant colors: ${$('color').value}.${lockT} Title lettering: ${ttl}. Decorative accents: ${mot}. A small cute ${mas} mascot in one corner. Clean white printable background inside the decorative border, very clear rounded child-friendly font, premium kids printable quality.`;
+ const tail=`${hdr} ${brand} ${face} ${extra}`.replace(/\s+/g,' ').trim();
+ const neg='Rules: all text spelled exactly as given, no extra words, no watermark, no logos, no QR code, nothing blurry, cropped or overlapping, every picture clearly recognizable and matching its word. Output only the worksheet page.';
+ let body='',key='',step1=null;
+ switch(t){
+ case 'match_letters':{
+  const p2=L.map(c=>pick2(c,age,pw[c]));const o1=der(pics),o2=der(p2);
+  key='Answer key: '+L.map((c,i)=>`${c.toUpperCase()} → left row ${o1.indexOf(pics[i])+1} (${pics[i]}) and right row ${o2.indexOf(p2[i])+1} (${p2[i]})`).join('; ');
+  body=`Title: “Match the beginning letter sound ${LR}”. Small instruction: “Observe the picture and match the beginning letter sound.” Layout: a neat table of ${N} rows and 3 columns: middle column a big lowercase letter, left and right columns one picture each, exactly as follows: ${L.map((c,i)=>`row ${i+1}: letter ${c}; left picture = ${o1[i]}; right picture = ${o2[i]}`).join('; ')}. Each row has a different pastel cell color. Every letter matches exactly one picture on the left and one on the right, and no picture sits in the row of its own letter. Learners draw lines from each letter to the pictures starting with that sound.`;break}
+ case 'begin_sound':{
+  const U=L.map(c=>c.toUpperCase()),o=der(pics);
+  key='Answer key: '+L.map((c,i)=>`${U[i]} → picture row ${o.indexOf(pics[i])+1} (${pics[i]})`).join(', ');
+  body=`Title: “MATCH THE BEGINNING SOUND”. Instruction: “Draw lines to match the pictures and their beginning sounds.” Layout: two columns of ${N} rows, exactly as follows: ${U.map((u,i)=>`row ${i+1}: left = big colorful letter ${u}; right = picture of ${o[i]}`).join('; ')}. A dot beside each item and wide empty space between the columns. No picture may sit in the row of its own letter.`;break}
+ case 'missing_letters':{const W=custom.length?custom.slice(0,N):pics;body=`Title: “Missing Letters!”. Instruction: “Look at the picture and fill in the missing letter.” Layout: 2 columns, ${W.length} items total, each a picture next to its word with ONE letter replaced by an empty blank line (${A.pos==='f'?'the first letter':A.pos==='l'?'the last letter':'a middle letter'}). Words exactly: ${J(W.map(w=>blank(w,A.pos)))}. Leave each blank empty.`;break}
+ case 'rhyme':{
+  const rp=rhymePairs(L);const pr=raw.includes('-')?custom.map(x=>x.split('-').map(s=>s.trim())):(rp.length>=2?rp:A.rh);
+  const seen=new Set();const P=pr.filter(p=>{if(seen.has(p[1])||seen.has(p[0]))return false;seen.add(p[0]);seen.add(p[1]);return true}).slice(0,N);
+  const o=der(P.map(p=>p[1]));
+  key='Answer key: '+P.map(p=>`${p[0]} → right row ${o.indexOf(p[1])+1} (${p[1]})`).join(', ');
+  body=`Title: “RHYME-TIME MATCHING” with a small subtitle “Letters ${LR}”. Instruction: “Connect each picture with its rhyming pair.” Layout: two columns of ${P.length} rows, exactly as follows: ${P.map((p,i)=>`row ${i+1}: left = picture of ${p[0]}; right = picture of ${o[i]}`).join('; ')}. A dot beside each picture and wide space between the columns. Pictures only, no word labels. No right picture may sit in the row of its own rhyming partner.`;break}
+ case 'read_connect':{
+  const W=uq((custom.length?custom:(L.length>=2?L.map(c=>pw[c]):A.rd))).slice(0,N);const o=der(W);
+  key='Answer key: '+W.map(w=>`${w} → word row ${o.indexOf(w)+1}`).join(', ');
+  body=`Title: “Read and connect: Letters ${LR}”. Directions: “Read each word and draw a line to the matching picture.” Layout: two columns of ${W.length} rows, exactly as follows: ${W.map((w,i)=>`row ${i+1}: left = picture box of ${w}; right = the word “${o[i]}” in big bubble letters`).join('; ')}. A small star dot beside each item. No word may sit in the row of its own picture.`;break}
+ case 'missing_piece':{
+  const p=raw.split('|').map(s=>s.trim());
+  const S0=rnd(MP);const scene=p[0]||S0[0];
+  const hid=p[1]||S0[1];
+  let wr=p.slice(2).filter(Boolean);if(!wr.length)wr=S0[2];
+  const k=A.k,ans=1+Math.floor(Math.random()*k),opts=[];let wi=0;
+  for(let i=1;i<=k;i++)opts.push(i===ans?'EXACT CROP of the area hidden by the gap (showing '+hid+')':wr[wi++%wr.length]);
+  step1={type:t,nopin:true,title:`${TYPES[t][0]} · STEP 1 (create the scene first) · ages ${age}`,key:'',info:'Step 1: generate this scene image first. Then attach it to the Step 2 prompt.',text:`Create a cute children’s book illustration (${RT[$('ratio').value]}) of ${scene}. Style: ${st}. Dominant colors: ${$('color').value}. Make sure ${hid} is clearly visible and fully drawn in the lower-right area of the picture, not overlapping other objects. Fill the whole canvas with the scene. No border, no text, no watermark, no worksheet elements.`};
+  body=`IMPORTANT: use the attached Step 1 illustration as the exact scene; do not redraw or change it. Title: “FIND THE MISSING PIECE”. Layout: put the illustration in a rounded frame. In its lower-right area, cover exactly ${hid} with ONE clean white rectangle with a dashed outline (the gap). Below the frame, ${k} plain rectangular answer tiles in a row (no jigsaw edges), numbered 1 to ${k} in small circles, each with the same width-to-height ratio as the gap. ${opts.map((o,i)=>`Tile ${i+1}: ${o}`).join('; ')}. Wrong tiles must clearly not fit the gap. Under each tile, an empty answer circle. Do not mark the correct tile.`;
+  key=`Answer key: option ${ans} (${hid})`;break}
+ case 'shadow':{
+  const CUR=['elephant','giraffe','turtle','lion','rabbit','duck','fish','butterfly','snail','owl','whale','penguin','crocodile','bear','cat','snake','camel','kangaroo'];
+  const an=L.filter(c=>ANI[c]).map(c=>rnd(ANI[c].split(',')));
+  const byLetters=!custom.length&&an.length>=3;
+  let S=shuf([...new Set(custom.length>=3?custom:(byLetters?an:CUR))]).slice(0,N);
+  let R;do{R=shuf(S)}while(R.some((x,i)=>x===S[i]));
+  const rows=S.map((a,i)=>`row ${i+1}: left = colorful ${a}; right = dark-gray silhouette of the ${R[i]}`);
+  key='Answer key: '+S.map(a=>`${a} → right row ${R.indexOf(a)+1}`).join(', ');
+  body=`Title: “Match the shadows”${byLetters?` with a small subtitle “Letters ${LR}”`:''}. Instruction: “Draw a line from each animal to its shadow.” Layout: two columns with ${S.length} rows, exactly as follows: ${rows.join('; ')}. Each silhouette is a solid dark-gray filled shape of that animal in side view with its most recognizable outline and no inner details. Every animal appears exactly once on the left and its shadow exactly once on the right. A small dot beside each picture for drawing lines.`;break}
+ case 'what_next':{
+  const ST=[['a gnome digs a hole in garden soil','the gnome puts a seed into the hole','the gnome waters the soil with a watering can','a strawberry plant with ripe red strawberries has grown and the gnome smiles'],
+['a child pours flour and eggs into a mixing bowl','the child stirs the batter with a wooden spoon','a cake bakes inside the oven','the child holds the finished cake with a candle'],
+['a child rolls a big snowball','the child stacks three snowballs','the child adds a carrot nose, a scarf and a hat','the finished snowman stands smiling in the snow'],
+['a hand plants a small seed in a pot','the seed is watered and a tiny sprout appears','a tall green stem with leaves has grown','a big yellow sunflower blooms in the sun'],
+['a bird flies carrying a twig','the bird builds a nest in a tree','three small eggs sit in the nest','three baby birds hatch and open their beaks'],
+['a child puts toothpaste on a toothbrush','the child brushes their teeth','the child rinses with a cup of water','the child smiles in the mirror showing clean teeth'],
+['a sunny sky slowly turns cloudy','heavy rain falls and a child holds an umbrella','the rain slows and the sun peeks out','a big rainbow appears over the happy child'],
+['a tiny egg sits on a green leaf','a caterpillar eats the leaf','the caterpillar hangs in a chrysalis','a colorful butterfly flies away']];
+  const parts=raw.split('|').map(x=>x.trim()).filter(Boolean);
+  let steps=parts.length>=4?parts.slice(0,4):(parts.length===1?[`the beginning of ${parts[0]}`,`the first action of ${parts[0]}`,`the second action of ${parts[0]}`,`the happy ending of ${parts[0]}`]:rnd(ST));
+  const k=age==='3-5'?3:4;if(k===3)steps=[steps[0],steps[1],steps[3]];
+  const pos=k===4?['top-left','top-right','bottom-left','bottom-right']:['left','middle','right'];
+  let ord;do{ord=shuf(steps.map((_,i)=>i))}while(ord.some((x,i)=>x===i));
+  key='Answer key: '+steps.map((_,i)=>`${i+1} → ${pos[ord.indexOf(i)]}`).join(', ');
+  body=`Title: “WHAT COMES NEXT? Arrange the pictures in the correct order”. Layout: ${k===4?'a 2×2 grid of 4':'a single row of 3'} cartoon story panels in rounded frames, with the same characters and art style in every panel. Panels: ${pos.map((q,j)=>`${q} panel shows: ${steps[ord[j]]}`).join('; ')}. Each panel has an empty circle in its top-left corner for writing a number from 1 to ${k}. Do not draw any numbers inside the panels.`;break}
+ case 'spot_diff':{const s=raw||rnd(SD);body=`Title: “FIND ${A.diff} DIFFERENCES”. Layout: two cartoon scenes stacked vertically showing ${s}. The bottom scene is identical to the top except for exactly ${A.diff} small but clearly visible differences (changed color, missing or added object, different expression). Both scenes same size and perfectly aligned.`;break}
+ case 'counting':{
+  const O=(custom.length?custom:L.map(c=>pw[c])),mx=A.cnt;
+  const pool=Array.from({length:mx},(_,i)=>i+1).sort(()=>Math.random()-.5).slice(0,N);
+  const rows=pool.map((c,i)=>`${c} × ${O[i%O.length]}`);
+  const ans=age==='3-5'?'Next to each group, three number choices in circles (one correct) for the child to circle.':'Next to each group, an empty rounded answer box labeled “How many?”.';
+  body=`Title: “Count and Write”. Instruction: “Count the pictures in each group.” Layout: ${N} rows, each row has ONE group of identical cartoon objects spaced apart in a loose, evenly spaced pattern (never overlapping, never hidden), with these exact quantities: ${rows.join('; ')}. ${ans} Counts must be 100% accurate, from 1 to ${mx}.`;
+  key='Kunci jawaban: '+rows.join(', ');break}
+ case 'tracing':{
+  const T=L.slice(0,N);
+  const mode={'3-5':`For each of ${T.length} rows: one huge uppercase letter (${J(T.map(c=>c.toUpperCase()))}) drawn as light-gray dotted outline with a start dot and numbered direction arrows, followed by two more dotted copies to trace.`,'4-6':`For each of ${T.length} rows: the uppercase and lowercase pair (${J(T.map(c=>c.toUpperCase()+c))}) as light-gray dotted outlines with start dots and arrows, a small picture of the matching word (${J(T.map(c=>pw[c]||c))}), and two extra dotted copies.`,'5-8':`For each of ${T.length} rows: the dotted letter pair and a dotted word to trace (${J(T.map(c=>(pw[c]||c)))}), with a small picture and one empty guide line for writing it independently.`,'6-9':`For each of ${T.length} rows: the dotted word to trace (${J(T.map(c=>(pw[c]||c)))}) on four-line handwriting guides, with a small picture, then one empty guide line to write the word alone.`}[age];
+  body=`Title: “Trace the Letters”. Instruction: “Trace the dotted letters. Start at the dot!” Layout: ${mode} All tracing lines sit on clear baseline guide lines (solid baseline, dashed midline).`;break}
+ case 'coloring':{
+  const sub=raw||`a big outlined bubble letter “${L[0].toUpperCase()}” and a cute ${pics[0]} to color`;
+  const det={'3-5':'one big simple subject, very thick outlines, large open shapes, almost no small details','4-6':'a simple subject with thick outlines and a few easy background elements','5-8':'a subject with moderate detail and a simple scene background','6-9':'a detailed scene with many smaller areas to color and patterns'}[age];
+  body=`Title: “Color Me!”. IMPORTANT: ignore any color palette or colorful style above. This is a coloring page: pure black outlines on a white background, closed shapes, no gray, no shading, no color fill, no filled black areas. Subject: ${sub}. Detail level: ${det}. Keep a clean margin and leave the subject centered.`;break}
+ case 'maze':{const s=raw||rnd(MZ);body=`Title: a short fun maze title that fits the story below, in big letters. Layout: a full-page kid-friendly winding maze with wide white paths on a green polka-dot background: ${A.maze}. Story: ${s}. Start and finish clearly marked at opposite sides. Exactly one valid solution.`;break}
+ }
+ const OUT={type:t,info:`Variasi acak ini → kata: ${J(pics)} · maskot: ${mas} · aksen: ${mot} · huruf judul: ${ttl}`,title:`${TYPES[t][0]} · usia ${age}`,key,text:`${base}\n\n${body}\n\n${tail}\n\n${neg}`.replace(/\n{3,}/g,'\n\n').replace(/ {2,}/g,' ')};
+ if(step1){OUT.title+=' · STEP 2 (attach the Step 1 image)';return[step1,OUT]}
+ return OUT;
+}
+
+/* ---- Claude API ---- */
+try{const k=localStorage.getItem('ak');if(k){$('key').value=k;$('remember').checked=true}}catch(e){}
+$('key').onchange=$('remember').onchange=()=>{try{$('remember').checked?localStorage.setItem('ak',$('key').value.trim()):localStorage.removeItem('ak')}catch(e){}};
+const SYS=`You are an expert prompt engineer for Google's Nano Banana (Gemini image model), specialised in premium printable kids' educational worksheets (phonics and puzzles). You receive a DRAFT prompt and the target age group. Do not merely rephrase: act as a creative director and rewrite it into one final, ready-to-paste English prompt that feels fresh. Keep all functional content (exact letters, words, counts, answer-key logic, layout logic, Name/Date and brand text) but invent a distinct cute theme for this page: setting, mascot, color accents, background motifs, title lettering and composition. Use the variation seed so repeated runs differ clearly. If the page is letter-based and the draft's words or pictures do not match the selected letters, replace them with simple pictureable words that begin with those letters. Rules: 1) Adapt difficulty, number of items, word choice, letter size and visual complexity strictly to the age group; ages 3-5 must feel clearly simpler than 6-9. 2) Keep every exact text string (titles, words, letters, Name/Date, brand lines) in quotes and state that spelling must be exact. 3) Be explicit about layout: columns, rows, positions, counts, dots or circles for answers. 4) For matching pages, specify a shuffled order so no row is already matched. 5) For "Find the Missing Piece": the gap is a plain rectangle; answer tiles are plain rectangles with the same aspect ratio as the gap (no jigsaw edges); state exactly what each tile contains; the correct tile must continue the surrounding scene (colors, lines, objects cut at the gap border) and wrong tiles must clearly not fit; never mark the answer. Keep the same correct tile number as the draft. 6) For spot-the-difference, shadow matching, sequencing and mazes, state exact counts and that there is a single clear solution. For counting pages, state the exact number of objects in every group, no overlapping objects, and an empty answer box or circled-number choices per row, keeping the draft's quantities. For tracing pages, use light-gray dotted letters with a start dot and numbered direction arrows on clear baseline guides. For coloring pages, require pure black outlines on white, closed shapes, no gray, no shading, no color fill. 7) End with a short negatives line (no watermark, no logos, no misspelling, no cropping, no overlap). Output ONLY the final prompt text, no preface, no markdown, no surrounding quotes.`;
+async function polish(o,age){
+ const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':$('key').value.trim(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:$('model').value.trim(),max_tokens:1500,system:SYS,messages:[{role:'user',content:`Age group: ${age}\nSelected letters: ${$('letters').value}\nVariation seed: ${Math.floor(Math.random()*1e6)}\n\nDRAFT PROMPT:\n${o.draft}`}]})});
+ const j=await r.json();if(!r.ok)throw new Error(j.error?.message||r.status);
+ return j.content.filter(c=>c.type==='text').map(c=>c.text).join('\n').trim();
+}
+/* ---- Pinterest ---- */
+const PIN={
+match_letters:['Beginning Letter Sound Matching Worksheet','letter sounds and early reading','#phonics #lettersounds #preschoolworksheets'],
+begin_sound:['Beginning Sounds Worksheet','matching beginning sounds','#phonics #beginningsounds #kindergarten'],
+missing_letters:['Missing Letters Worksheet','spotting missing letters and spelling first words','#spelling #phonics #kindergartenworksheets'],
+rhyme:['Rhyming Words Matching Worksheet','recognizing rhyming words','#rhyming #phonics #preschoollearning'],
+read_connect:['Read and Connect Worksheet','reading simple words','#sightwords #readingpractice #kindergarten'],
+missing_piece:['Find the Missing Piece Puzzle','visual thinking and problem solving','#puzzlesforkids #braingames #preschoolactivities'],
+shadow:['Shadow Matching Worksheet','visual discrimination','#shadowmatching #visualperception #kidsactivities'],
+what_next:['What Comes Next Sequencing Worksheet','sequencing and logical thinking','#sequencing #criticalthinking #kidsworksheets'],
+spot_diff:['Spot the Difference Printable','attention to detail and focus','#spotthedifference #kidspuzzles #quietactivities'],
+maze:['Printable Maze for Kids','fine motor skills and planning','#mazes #finemotorskills #kidsactivities'],
+counting:['Counting Worksheet','counting and number recognition','#counting #mathforkids #preschoolmath'],
+tracing:['Letter Tracing Worksheet','handwriting and letter formation','#lettertracing #handwriting #prewriting'],
+coloring:['Coloring Page','creativity and fine motor skills','#coloringpages #kidscrafts #freeprintable']};
+function pinDraft(o,age){
+ const[nm,skill,tags]=PIN[o.type],a=age.replace('-','–'),L=letters();
+ const lt=['match_letters','begin_sound','missing_letters','tracing'].includes(o.type)&&L.length&&L.length<=8?` Letters: ${J(L.map(c=>c.toUpperCase()))}.`:'';
+ let title=`${nm} for Ages ${a} | Free Printable`;if(title.length>100)title=title.slice(0,97)+'...';
+ const cta=$('cta').value.trim()||'Get the free worksheet';
+ let desc=`${cta}! A cute, easy-to-print ${nm.toLowerCase()} for ages ${a} to build ${skill}.${lt} Perfect for preschool, kindergarten, homeschool and quiet time at home. ${tags}`;
+ if(desc.length>500)desc=desc.slice(0,497)+'...';
+ return{title,desc};
+}
+const PSYS=`You write Pinterest SEO copy for kids' educational printables from the shop The Little Chic Co. You get the worksheet's image prompt (to know its exact theme), the age group, the call to action and a draft. Reply with JSON only, no markdown: {"title":"...","description":"..."}. Title: max 100 characters, keyword-first (worksheet type, age range, free printable), natural, at most one emoji. Description: 300-480 characters (never over 500): one or two sentences on what the child practices and who it is for (preschool, kindergarten, homeschool, parents, teachers), a clear call to action using the given CTA, then 3-5 relevant hashtags at the end. Match the worksheet's real theme and age, never promise things the worksheet does not have. English only.`;
+async function ask(sys,user,max){
+ const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':$('key').value.trim(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:$('model').value.trim(),max_tokens:max,system:sys,messages:[{role:'user',content:user}]})});
+ const j=await r.json();if(!r.ok)throw new Error(j.error?.message||r.status);
+ return j.content.filter(c=>c.type==='text').map(c=>c.text).join('\n').trim();
+}
+async function pinAI(o,age,dr){
+ const t=await ask(PSYS,`Age group: ${age}\nWorksheet type: ${TYPES[o.type][0]}\nCTA: ${$('cta').value.trim()||'Get the free worksheet'}\n\nWorksheet image prompt:\n${o.draft}\n\nDraft title: ${dr.title}\nDraft description: ${dr.desc}`,700);
+ const m=t.match(/\{[\s\S]*\}/);if(!m)throw new Error('Format balasan tidak dikenali');return JSON.parse(m[0]);
+}
+function pinBox(o,age){
+ const w=document.createElement('div');w.className='pin';const dr=pinDraft(o,age);
+ const h=document.createElement('h3');h.textContent='📌 Pinterest';
+ const lab=x=>{const l=document.createElement('label');l.textContent=x;return l};
+ const t=document.createElement('input');t.type='text';t.value=dr.title;
+ const d=document.createElement('textarea');d.value=dr.desc;d.style.minHeight='120px';
+ const ct=document.createElement('div'),cd=document.createElement('div'),sg=document.createElement('div');ct.className=cd.className=sg.className='st';
+ const upd=()=>{ct.textContent=t.value.length+'/100';cd.textContent=d.value.length+'/500'};t.oninput=d.oninput=upd;upd();
+ const cp=(el,l)=>{const b=document.createElement('button');b.className='ghost';b.textContent='📋 Salin '+l;b.onclick=async()=>{const ok=await copyText(el.value);if(!ok)el.select();b.textContent=ok?'✅ Tersalin':'Teks terpilih, tekan Ctrl+C';setTimeout(()=>b.textContent='📋 Salin '+l,2500)};return b};
+ const ai=document.createElement('button');ai.className='alt';ai.textContent='✨ Claude untuk Pinterest';
+ ai.onclick=async()=>{if(!$('key').value.trim()){sg.textContent='Isi Anthropic API key dulu.';return}
+  ai.disabled=true;sg.textContent='Claude sedang menulis…';
+  try{const j=await pinAI(o,age,dr);t.value=String(j.title||'').slice(0,100);d.value=String(j.description||'').slice(0,500);upd();sg.textContent='✔ Ditulis oleh Claude'}catch(e){sg.textContent='Gagal: '+e.message+' (draft tetap bisa dipakai)'}
+  ai.disabled=false};
+ const bw=document.createElement('div');bw.className='btns';bw.append(cp(t,'judul'),cp(d,'deskripsi'),ai);
+ w.append(h,lab('Judul'),t,ct,lab('Deskripsi'),d,cd);
+ const lk=$('plink').value.trim();if(lk){const l=document.createElement('input');l.type='text';l.value=lk;l.readOnly=true;w.append(lab('Link'),l);bw.insertBefore(cp(l,'link'),ai)}
+ w.append(bw,sg);return w;
+}
+async function copyText(t){
+ try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(t);return true}}catch(e){}
+ try{const a=document.createElement('textarea');a.value=t;a.setAttribute('readonly','');a.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0';document.body.appendChild(a);a.focus();a.select();a.setSelectionRange(0,t.length);const ok=document.execCommand('copy');a.remove();return !!ok}catch(e){return false}
+}
+const cards=[];
+function card(o,age){
+ const d=document.createElement('div');d.className='out';
+ const h=document.createElement('h3');h.textContent=o.title;d.append(h);
+ if(o.key){const k=document.createElement('div');k.className='key';k.textContent=o.key;d.append(k)}
+ if(o.info){const i=document.createElement('div');i.className='st';i.textContent=o.info;d.append(i)}
+ const p=document.createElement('pre');p.textContent=o.text;
+ const st=document.createElement('div');st.className='st';
+ const b1=document.createElement('button');b1.className='ghost';b1.textContent='📋 Salin';
+ b1.onclick=async()=>{const ok=await copyText(o.text);if(!ok){const r=document.createRange();r.selectNodeContents(p);const g=getSelection();g.removeAllRanges();g.addRange(r)}b1.textContent=ok?'✅ Tersalin':'Teks terpilih, tekan Ctrl+C';setTimeout(()=>b1.textContent='📋 Salin',2500)};
+ const b2=document.createElement('button');b2.className='alt';b2.textContent='✨ Sempurnakan dengan Claude';
+ const run=async()=>{
+  if(!$('key').value.trim()){st.textContent='Isi Anthropic API key dulu.';return}
+  b2.disabled=true;st.textContent='Claude sedang menulis prompt…';
+  try{o.text=await polish(o,age);p.textContent=o.text;st.textContent='✔ Disempurnakan oleh Claude'}catch(e){st.textContent='Gagal: '+e.message+' (draft tetap bisa dipakai)'}
+  b2.disabled=false};
+ b2.onclick=run;
+ const bw=document.createElement('div');bw.className='btns';bw.append(b1,b2);
+ d.append(p,bw,st);if(!o.nopin)d.append(pinBox(o,age));cards.push(run);return d;
+}
+async function show(list){
+ const r=$('results');r.innerHTML='';cards.length=0;const age=$('age').value;
+ list.forEach(o=>{o.draft=o.text;r.append(card(o,age))});
+ r.scrollIntoView({behavior:'smooth'});
+ if($('useai').checked&&$('key').value.trim())for(const f of cards)await f();
+}
+$('go').onclick=()=>show([].concat(build($('type').value)));
+$('pack1').onclick=()=>show(Object.keys(TYPES).filter(k=>TYPES[k][1]==1).flatMap(t=>[].concat(build(t))));
+$('pack3').onclick=()=>show(Object.keys(TYPES).filter(k=>TYPES[k][1]==3).flatMap(t=>[].concat(build(t))));
+$('pack2').onclick=()=>show(Object.keys(TYPES).filter(k=>TYPES[k][1]==2).flatMap(t=>[].concat(build(t))));
+$('theme').onclick=()=>{const r=document.documentElement;r.setAttribute('data-theme',getComputedStyle(r).getPropertyValue('--bg').trim()==='#1b1626'?'light':'dark')};
+</script>
+</body>
+</html>
